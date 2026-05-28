@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
+import useAuthStore from "../store/authStore";
+import bgImage from "../assets/images/background-image.png";
+import logo from "../assets/images/logo.png";
+import EyeIcon from "../components/Icons/EyeIcon";
+import EyeOffIcon from "../components/Icons/EyeOffIcon";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -51,12 +55,12 @@ export default function Login() {
     try {
       setLoading(true);
 
-      // MOCK 
+      // მოკი
       const data = {
         token: "fake-token",
         user: {
           email: form.email,
-          role: "admin", // admin"  "lecturer"
+          role: "student", // "student" "admin"  "lecturer"
         },
       };
 
@@ -64,7 +68,6 @@ export default function Login() {
 
       login(data);
       navigate("/dashboard");
-
     } catch (err) {
       setError("Something went wrong. Try again.");
     } finally {
@@ -74,96 +77,112 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex">
-      <div className="hidden md:block w-1/2 bg-cover bg-center"
+      <div
+        className="hidden md:block w-1/2 bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d')",
+          backgroundImage: `url(${bgImage})`,
         }}
       />
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
 
-        <h2 className="text-3xl font-bold text-center mb-2">
-          სისტემაში შევლა
-        </h2>
-
-        {error && (
-          <div className="bg-red-100 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              მომხმარებელი 
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="example@mail.com"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+      <div className="w-1/2 bg-white pl-8 pr-8   flex flex-col justify-center">
+        <div className="pl-12 pr-12">
+          <div className="flex items-center gap-4 mb-12">
+            <img src={logo} alt="Logo" className="w-lg" />
+            <p className="text-md font-bold text-left text-[#1A71B7]">
+              ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი
+            </p>
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              პაროლი
-          
-            </label>
+          <div className="w-full  bg-white p-12 rounded-xl border-2 border-[#1A71B7]">
+            <h2 className="text-3xl font-bold text-center mb-8 text-[#1A71B7]">
+              სისტემაში შესვლა
+            </h2>
 
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="••••••••"
-                value={form.password}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
-              />
+            {error && (
+              <div className="bg-red-100 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-5 mb-6">
+              <div className="text-left">
+                <label className=" text-sm  font-medium text-gray-400">
+                  მომხმარებელი
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="example@mail.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
+                />
+              </div>
+
+              <div className="text-left">
+                <label className="text-sm font-medium text-gray-400">
+                  პაროლი
+                </label>
+
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="••••••••"
+                    value={form.password}
+                    onChange={handleChange}
+                    className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7] pr-12"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-5 text-sm text-gray-500"
+                  >
+                    {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                  </button>
+                </div>
+              </div>
+
+              <span className="">
+                <span
+                  onClick={() => navigate("/forgot-password")}
+                  className=" block w-full text-sm mb-6  text-[#1A71B7]  cursor-pointer hover:underline text-right"
+                >
+                  დაგავიწყდა პაროლი?
+                </span>
+              </span>
 
               <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-sm text-gray-500"
+                type="submit"
+                disabled={loading}
+                className={`w-full p-3 rounded-lg text-white font-medium transition 
+              ${
+                loading
+                  ? "bg-blue-400 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              }`}
               >
-                {showPassword ? "Hide" : "Show"}
+                {loading ? "Logging in..." : "ავტორიზაცია"}
               </button>
+            </form>
+
+            <div className="mb-6 flex items-center gap-4 w-full">
+              <div className="flex-1 h-px bg-[#8BC34A]"></div>
+
+              <span className="text-black text-lg">ან</span>
+
+              <div className="flex-1 h-px bg-[#8BC34A]"></div>
+            </div>
+
+            <div
+              onClick={() => navigate("/register")}
+              className=" rounded-xl border border-green-600 text-green-600 cursor-pointer p-3 text-center"
+            >
+              გაიარეთ სისტემაში რეგისტრაცია
             </div>
           </div>
-
-          <div className="text-right text-sm">
-            <span className="text-blue-600 cursor-pointer hover:underline">
-              დაგავიწყდა პაროლი?
-            </span>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full p-3 rounded-lg text-white font-medium transition 
-              ${loading
-                ? "bg-blue-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
-              }`}
-          >
-            {loading ? "Logging in..." : "ავტორიზაცია"}
-          </button>
-
-        </form>
-
-        <p className="text-sm text-center mt-6">
-          არ გაქვს ექაუნთი?{" "}
-          <span
-            onClick={() => navigate("/register")}
-            className="text-blue-600 cursor-pointer hover:underline"
-          >
-            რეგისტრაცია
-          </span>
-        </p>
-
+        </div>
       </div>
     </div>
   );

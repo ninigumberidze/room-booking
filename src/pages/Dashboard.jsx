@@ -1,5 +1,4 @@
-import { useAuthStore } from "../store/authStore";
-import StudentDashboard from "./StudentDashboard";
+import useAuthStore from "../store/authStore";import StudentDashboard from "./StudentDashboard";
 import LecturerDashboard from "./LecturerDashboard";
 import AdminDashboard from "./AdminDashboard";
 
