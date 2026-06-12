@@ -4,8 +4,9 @@ import useAuthStore from "../store/authStore";
 import ProjectLogo from "../components/Icons/ProjectLogo";
 import SearchIcon from "../components/Icons/SearchIcon";
 import LogoutModal from "../shared/components/LogoutModal";
-
-//  MOCK
+import Footer from "../components/Layout/Footer";
+import { useUser, useLogout } from "../store/authStore";
+//  Mock
 const mockAdmin = {
   firstName: "ნინიკო",
   lastName: "ადმინიკო",
@@ -48,7 +49,7 @@ const mockRooms = [
 export default function AdminDashboard() {
   const navigate = useNavigate();
 
-  const logout = useAuthStore((state) => state.logout);
+  const logout = useLogout();
 
   const [filters, setFilters] = useState({
     search: "",
@@ -120,7 +121,7 @@ export default function AdminDashboard() {
       </div>
 
       <div className="p-6  relative ">
-        <div className="border-2 border-[#C72E31] rounded-xl p-10 pb-12 pt-12 mb-6 bg-white relative">
+        <div className="border-2 border-[#5D9028] rounded-xl p-10 pb-12 pt-12 mb-6 bg-white relative">
           <div className="flex items-center gap-2 absolute -top-3 left-5 bg-white px-2">
             <SearchIcon />
             <h3 className="text-[#C72E31] font-medium">საძიებო პანელი</h3>
@@ -133,10 +134,10 @@ export default function AdminDashboard() {
                   placeholder="ძებნა..."
                   value={filters.search}
                   onChange={handleChange}
-                  className="border-2 border-[#C72E31] rounded-lg px-4 py-2 pr-10"
+                  className="border-2 border-[#5D9028] rounded-lg px-4 py-2 pr-10"
                 />
 
-                <span className="absolute right-3 top-2.5 text-[#C72E31]">
+                <span className="absolute right-3 top-2.5 text-[#5D9028]">
                   {<SearchIcon />}
                 </span>
               </div>
@@ -145,7 +146,7 @@ export default function AdminDashboard() {
                 name="faculty"
                 value={filters.faculty}
                 onChange={handleChange}
-                className="border-2 border-[#C72E31]   rounded-lg px-4 py-2"
+                className="border-2 border-[#5D9028]   rounded-lg px-4 py-2"
               >
                 <option value="">ფაკულტეტი</option>
 
@@ -158,7 +159,7 @@ export default function AdminDashboard() {
                 name="direction"
                 value={filters.direction}
                 onChange={handleChange}
-                className="border-2 border-[#C72E31]  rounded-lg px-4 py-2"
+                className="border-2 border-[#5D9028]  rounded-lg px-4 py-2"
               >
                 <option value="">მიმართულება</option>
 
@@ -191,7 +192,7 @@ export default function AdminDashboard() {
 
               <button
                 onClick={handleReset}
-                className="border-2  border-[#C72E31] text-[#C72E31] px-4 py-2 rounded-lg hover:bg-[#A52A2A] transition"
+                className="border-2  border-[#5D9028] text-[#5D9028] px-4 py-2 rounded-lg hover:bg-[#A52A2A] transition"
               >
                 გასუფთავება
               </button>
@@ -199,9 +200,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="border-2 border-[#C72E31] rounded-xl p-8 bg-white">
+        <div className="border-2 border-[#5D9028] rounded-xl p-8 bg-white">
           {results.length === 0 ? (
-            <p className="text-[#C72E31] text-center py-20">
+            <p className="text-[#5D9028] text-center py-20">
               შედეგი ვერ მოიძებნა
             </p>
           ) : (
@@ -252,9 +253,7 @@ export default function AdminDashboard() {
           navigate("/");
         }}
       />
-      <div className="border-t mt-6 p-4 text-center text-sm text-gray-500">
-        © ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი
-      </div>
+      <Footer />
     </div>
   );
 }

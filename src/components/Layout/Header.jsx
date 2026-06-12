@@ -1,4 +1,4 @@
-import ProjectLogo from "../../components/Icons/ProjectLogo";
+import ProjectLogo from "../Icons/ProjectLogo";
 
 export default function Header({
   userName,
@@ -11,7 +11,15 @@ export default function Header({
       className="text-white px-6 py-4 flex justify-between items-center"
       style={{ backgroundColor: color }}
     >
-      <ProjectLogo />
+      <div className="flex items-center gap-2 ">
+        <ProjectLogo />
+        <div className="flex flex-col">
+          <span className="font-bold text-left text-lg leading-tight">
+            UniRoom
+          </span>
+          <span className="text-sm leading-tight">მართვის სისტემა</span>
+        </div>
+      </div>
 
       <div className="flex items-center gap-3">
         <button

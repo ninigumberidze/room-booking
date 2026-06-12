@@ -1,13 +1,19 @@
 import axios from "axios";
 
-export const api = axios.create({
-  baseURL: "https://localhost:5001/api",
+const api = axios.create({
+  baseURL: "https://room-reservation-system-t8gs.onrender.com",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
+
   return config;
 });
+export default api;

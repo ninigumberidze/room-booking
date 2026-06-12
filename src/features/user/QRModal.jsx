@@ -1,4 +1,4 @@
-export default function QRModal({ open, onClose, qrValue }) {
+export default function QRModal({ open, onClose, qrImage }) {
   if (!open) return null;
 
   return (
@@ -11,12 +11,10 @@ export default function QRModal({ open, onClose, qrValue }) {
         className="bg-white p-8 rounded-lg text-center"
       >
         <img
-          src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrValue}`}
-          alt="QR"
-          className="mx-auto"
+          src={`data:image/png;base64,${qrImage}`}
+          alt="QR Code"
+          className="mx-auto w-40 h-40"
         />
-
-        <p className="mt-4 text-gray-500">კოდი: {qrValue}</p>
       </div>
     </div>
   );

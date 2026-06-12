@@ -2,6 +2,8 @@ export default function BookingConfirmModal({
   open,
   onClose,
   onConfirm,
+  reservationTitle,
+  setReservationTitle,
   title = "ოთახის დაჯავშნა",
   description = "ნამდვილად გსურთ ოთახის დაჯავშნა?",
 }) {

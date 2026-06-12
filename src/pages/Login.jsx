@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
-import bgImage from "../assets/images/background-image.png";
-import logo from "../assets/images/logo.png";
+import { authService } from "../services/authService";
 import EyeIcon from "../components/Icons/EyeIcon";
 import EyeOffIcon from "../components/Icons/EyeOffIcon";
+import AuthLayout from "../components/Layout/AuthLayout";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuthStore();
-
+  const { login, setUser } = useAuthStore();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -55,135 +54,141 @@ export default function Login() {
     try {
       setLoading(true);
 
-      // მოკი
-      const data = {
-        token: "fake-token",
-        user: {
-          email: form.email,
-          role: "student", // "student" "admin"  "lecturer"
-        },
-      };
+      const { data } = await authService.login({
+        email: form.email,
+        password: form.password,
+      });
 
-      await new Promise((res) => setTimeout(res, 800));
+      switch (data.status) {
+        case 1:
+          login({
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+            expiresAtUtc: data.expiresAtUtc,
+          });
 
-      login(data);
-      navigate("/dashboard");
+          const profileResponse = await authService.getProfile();
+
+          console.log("PROFILE:", profileResponse.data);
+
+          setUser(profileResponse.data);
+
+          navigate("/dashboard");
+          break;
+
+        case 2:
+          setError("ელ-ფოსტა ან პაროლი არასწორია");
+          break;
+
+        case 3:
+          setError("გთხოვთ დაადასტუროთ ელ-ფოსტა");
+          break;
+
+        case 4:
+          setError("ანგარიში არააქტიურია");
+          break;
+
+        default:
+          setError("დაფიქსირდა შეცდომა");
+      }
     } catch (err) {
-      setError("Something went wrong. Try again.");
+      console.log(err);
+
+      setError("ავტორიზაცია ვერ შესრულდა");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div
-        className="hidden md:block w-1/2 bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-        }}
-      />
+    <AuthLayout>
+      <div className="w-full  bg-white p-12 rounded-xl border-2 border-[#1A71B7]">
+        <h2 className="text-3xl font-bold text-center mb-8 text-[#1A71B7]">
+          სისტემაში შესვლა
+        </h2>
 
-      <div className="w-1/2 bg-white pl-8 pr-8   flex flex-col justify-center">
-        <div className="pl-12 pr-12">
-          <div className="flex items-center gap-4 mb-12">
-            <img src={logo} alt="Logo" className="w-lg" />
-            <p className="text-md font-bold text-left text-[#1A71B7]">
-              ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი
-            </p>
+        {error && (
+          <div className="bg-red-100 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5 mb-6">
+          <div className="text-left">
+            <label className=" text-sm  font-medium text-gray-400">
+              მომხმარებელი
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="example@mail.com"
+              value={form.email}
+              onChange={handleChange}
+              className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
+            />
           </div>
 
-          <div className="w-full  bg-white p-12 rounded-xl border-2 border-[#1A71B7]">
-            <h2 className="text-3xl font-bold text-center mb-8 text-[#1A71B7]">
-              სისტემაში შესვლა
-            </h2>
+          <div className="text-left">
+            <label className="text-sm font-medium text-gray-400">პაროლი</label>
 
-            {error && (
-              <div className="bg-red-100 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
-                {error}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-5 mb-6">
-              <div className="text-left">
-                <label className=" text-sm  font-medium text-gray-400">
-                  მომხმარებელი
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="example@mail.com"
-                  value={form.email}
-                  onChange={handleChange}
-                  className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
-                />
-              </div>
-
-              <div className="text-left">
-                <label className="text-sm font-medium text-gray-400">
-                  პაროლი
-                </label>
-
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="••••••••"
-                    value={form.password}
-                    onChange={handleChange}
-                    className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7] pr-12"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-5 text-sm text-gray-500"
-                  >
-                    {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                  </button>
-                </div>
-              </div>
-
-              <span className="">
-                <span
-                  onClick={() => navigate("/forgot-password")}
-                  className=" block w-full text-sm mb-6  text-[#1A71B7]  cursor-pointer hover:underline text-right"
-                >
-                  დაგავიწყდა პაროლი?
-                </span>
-              </span>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={handleChange}
+                className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7] pr-12"
+              />
 
               <button
-                type="submit"
-                disabled={loading}
-                className={`w-full p-3 rounded-lg text-white font-medium transition 
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-5 text-sm text-gray-500"
+              >
+                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+              </button>
+            </div>
+          </div>
+
+          <span className="">
+            <span
+              onClick={() => navigate("/forgot-password")}
+              className=" block w-full text-sm mb-6  text-[#1A71B7]  cursor-pointer hover:underline text-right"
+            >
+              დაგავიწყდა პაროლი?
+            </span>
+          </span>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full p-3 rounded-lg text-white font-medium transition 
               ${
                 loading
                   ? "bg-blue-400 cursor-not-allowed"
                   : "bg-blue-600 hover:bg-blue-700"
               }`}
-              >
-                {loading ? "Logging in..." : "ავტორიზაცია"}
-              </button>
-            </form>
+          >
+            {loading ? "Logging in..." : "ავტორიზაცია"}
+          </button>
+        </form>
 
-            <div className="mb-6 flex items-center gap-4 w-full">
-              <div className="flex-1 h-px bg-[#8BC34A]"></div>
+        <div className="mb-6 flex items-center gap-4 w-full">
+          <div className="flex-1 h-px bg-[#8BC34A]"></div>
 
-              <span className="text-black text-lg">ან</span>
+          <span className="text-black text-lg">ან</span>
 
-              <div className="flex-1 h-px bg-[#8BC34A]"></div>
-            </div>
+          <div className="flex-1 h-px bg-[#8BC34A]"></div>
+        </div>
 
-            <div
-              onClick={() => navigate("/register")}
-              className=" rounded-xl border border-green-600 text-green-600 cursor-pointer p-3 text-center"
-            >
-              გაიარეთ სისტემაში რეგისტრაცია
-            </div>
-          </div>
+        <div
+          onClick={() => navigate("/register")}
+          className=" rounded-xl border border-green-600 text-green-600 cursor-pointer p-3 text-center"
+        >
+          გაიარეთ სისტემაში რეგისტრაცია
         </div>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

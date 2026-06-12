@@ -20,11 +20,6 @@ import ProtectedRoute from "./ProtectedRoute";
 export default function AppRoutes() {
   return (
     <Routes>
-
-      {/* LOGIN */}
-      <Route path="/" element={<Login />} />
-
-      {/* DEFAULT */}
       <Route
         path="/dashboard"
         element={
@@ -34,15 +29,11 @@ export default function AppRoutes() {
         }
       />
 
-      <Route
-        path="/forgot-password"
-          element={<ForgotPassword />}
-        />
-              {/* LOGIN */}
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      {/* STUDENT */}
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
       <Route
         path="/student-dashboard"
         element={
@@ -61,7 +52,6 @@ export default function AppRoutes() {
         }
       />
 
-      {/* ADMIN */}
       <Route
         path="/admin-dashboard"
         element={
@@ -80,7 +70,9 @@ export default function AppRoutes() {
         }
       />
 
-      {/* LECTURER */}
+      {/* <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      <Route path="/admin-profile" element={<AdminProfile />} /> */}
+
       <Route
         path="/lecturer-dashboard"
         element={
@@ -98,7 +90,6 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
-
     </Routes>
   );
 }
