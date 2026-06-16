@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
 import HistoryIcon from "../components/Icons/HistoryIcon";
 import Header from "../components/Layout/Header";
-import LogoutModal from "../shared/components/LogoutModal";
 import QRModal from "../features/user/QRModal";
 import ProfileInfoCard from "../features/user/ProfileInfoCard";
 import ContactCard from "../features/user/ContactCard";
@@ -12,15 +11,14 @@ import ProfileHeader from "../components/Layout/ProfileHeader";
 import ReservationCancelModal from "../features/user/ReservationCancelModal";
 import { reservationService } from "../services/reservationService";
 import Footer from "../components/Layout/Footer";
-import { useUser, useLogout } from "../store/authStore";
+import { useUser } from "../store/authStore";
+import { useLogout } from "../shared/hooks/useLogout";
 export default function LecturerProfile() {
   const navigate = useNavigate();
   const user = useUser();
-  const logout = useLogout();
 
   const [bookings, setBookings] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [selectedQR, setSelectedQR] = useState(null);
   const [reservationToCancel, setReservationToCancel] = useState(null);
   const [historyPage, setHistoryPage] = useState(1);
@@ -68,7 +66,6 @@ export default function LecturerProfile() {
       <ProfileHeader
         userName={`${user?.firstName || ""} ${user?.lastName || ""}`}
         onProfileClick={() => navigate("/lecturer-dashboard")}
-        onLogoutClick={() => setShowLogoutModal(true)}
       />
 
       <div className="max-w-6xl mx-auto p-8">
@@ -145,14 +142,6 @@ export default function LecturerProfile() {
         onConfirm={handleConfirmCancel}
       />
 
-      <LogoutModal
-        open={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={() => {
-          logout();
-          navigate("/");
-        }}
-      />
       <Footer />
     </div>
   );

@@ -51,4 +51,4 @@ const useAuthStore = create((set) => ({
 
 export default useAuthStore;
 export const useUser = () => useAuthStore((state) => state.user);
-export const useLogout = () => useAuthStore((state) => state.logout);
+export const useLogoutAction = () => useAuthStore((state) => state.logout);

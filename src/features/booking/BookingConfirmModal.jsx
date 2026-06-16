@@ -26,7 +26,7 @@ export default function BookingConfirmModal({
 
           <button
             onClick={onConfirm}
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg"
+            className="bg-[#5D9028] text-white px-4 py-2 rounded-lg"
           >
             დადასტურება
           </button>

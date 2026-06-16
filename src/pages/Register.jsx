@@ -35,6 +35,11 @@ export default function Register() {
 
   const [otpError, setOtpError] = useState("");
 
+  const maxBirthDate = new Date();
+  maxBirthDate.setFullYear(maxBirthDate.getFullYear() - 17);
+
+  const maxDate = maxBirthDate.toISOString().split("T")[0];
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -95,7 +100,7 @@ export default function Register() {
       setError(validationError);
       return;
     }
-    console.log("birthDate:", form.birthDate);
+
     try {
       const payload = {
         firstName: form.firstName,
@@ -180,6 +185,7 @@ export default function Register() {
                 name="birthDate"
                 onChange={handleChange}
                 className="input"
+                max={maxDate}
               />
 
               <select name="gender" onChange={handleChange} className="input">
@@ -194,7 +200,7 @@ export default function Register() {
                 <option value="">სტატუსი</option>
                 <option>სტუდენტი</option>
                 <option>ლექტორი</option>
-                <option>ადმინისტრატორი</option>
+                {/* <option>ადმინისტრატორი</option> */}
               </select>
 
               <input
@@ -332,6 +338,7 @@ export default function Register() {
       <OTPModal
         open={showOtpModal}
         otp={otp}
+        onClose={() => setShowOtpModal(false)}
         setOtp={setOtp}
         error={otpError}
         resendTimer={resendTimer}

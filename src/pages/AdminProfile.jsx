@@ -10,7 +10,8 @@ import ProfileInfoCard from "../features/user/ProfileInfoCard";
 import ContactCard from "../features/user/ContactCard";
 import ProfileHeader from "../components/Layout/ProfileHeader";
 import Footer from "../components/Layout/Footer";
-import { useUser, useLogout } from "../store/authStore";
+import { useUser } from "../store/authStore";
+import { useLogout } from "../shared/hooks/useLogout";
 const mockAdmin = {
   firstName: "ნინიკო",
   lastName: "ადმინიკო",
@@ -30,7 +31,6 @@ export default function AdminProfile() {
       <ProfileHeader
         userName={`${mockAdmin.firstName} ${mockAdmin.lastName}`}
         onProfileClick={() => navigate("/admin-profile")}
-        onLogoutClick={() => setShowLogoutModal(true)}
       ></ProfileHeader>
 
       <div className="max-w-6xl mx-auto p-8">
@@ -45,14 +45,6 @@ export default function AdminProfile() {
         <ContactCard email={mockAdmin.email} phone={mockAdmin.phone} />
       </div>
 
-      <LogoutModal
-        open={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={() => {
-          logout();
-          navigate("/");
-        }}
-      />
       <Footer />
     </div>
   );

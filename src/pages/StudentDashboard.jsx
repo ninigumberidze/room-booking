@@ -14,13 +14,12 @@ import BookingConfirmModal from "../features/booking/BookingConfirmModal";
 import SuccessQRModal from "../features/booking/SuccessQRModal";
 import TimeSlotModal from "../features/booking/TimeSlotModal";
 import Footer from "../components/Layout/Footer";
-import { useUser, useLogout } from "../store/authStore";
-
+import { useUser } from "../store/authStore";
+import { useLogout } from "../shared/hooks/useLogout";
 export default function StudentDashboard() {
   const user = useUser();
+  const logoutModal = useLogout();
   const navigate = useNavigate();
-
-  const logout = useLogout();
 
   const [filters, setFilters] = useState({
     date: "",
@@ -38,10 +37,8 @@ export default function StudentDashboard() {
 
   const [results, setResults] = useState([]);
   const [confirmRoom, setConfirmRoom] = useState(null);
-
+  const [bookingError, setBookingError] = useState("");
   const [selectedRoom, setSelectedRoom] = useState(null);
-
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -131,14 +128,13 @@ export default function StudentDashboard() {
         reservationId: data.reservationId,
       });
     } catch (err) {
-      console.log(err);
       const detail = err.response?.data?.detail;
       const code = err.response?.data?.code;
 
       if (code === "Reservation.DailyLimitExceeded") {
-        alert("თქვენ ამოწურეთ დღიური ჯავშნების ლიმიტი");
+        setBookingError("თქვენ ამოწურეთ დღიური ჯავშნების ლიმიტი");
       } else {
-        alert(detail || "Reservation failed");
+        setBookingError(detail || "დაჯავშნა ვერ მოხერხდა");
       }
     }
   };
@@ -190,19 +186,18 @@ export default function StudentDashboard() {
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen  ">
       <Header
         userName={`${user?.firstName || ""} ${user?.lastName || ""}`}
         onProfileClick={() => navigate("/student-profile")}
-        onLogoutClick={() => setShowLogoutModal(true)}
       />
 
       <div className="p-6 relative">
-        <div className="border border-[#F37A21] rounded-xl p-5 bg-white relative">
+        <div className="border border-[#5D9028] rounded-xl p-5 bg-white relative">
           <div className="flex items-center gap-3 z-10 bg-white absolute -top-3 left-5 px-2">
             <BookIcon />
 
-            <h3 className="text-orange-500 font-medium text-left">
+            <h3 className="text-[#5D9028] font-medium text-left">
               ოთახის ძებნა
             </h3>
           </div>
@@ -216,13 +211,13 @@ export default function StudentDashboard() {
                 min={reservationFilters?.minDate}
                 max={reservationFilters?.maxDate}
                 onChange={handleChange}
-                className="border border-[#F37A21] px-4 py-2 rounded-lg"
+                className="border border-[#5D9028]   px-4 py-2 rounded-lg"
               />
               <select
                 name="buildingId"
                 value={filters.buildingId}
                 onChange={handleChange}
-                className="border border-[#F37A21] px-4 py-2 rounded-lg"
+                className="border border-[#5D9028] px-4 py-2 rounded-lg"
               >
                 <option value="">კორპუსი</option>
 
@@ -236,7 +231,7 @@ export default function StudentDashboard() {
                 name="roomType"
                 value={filters.roomType}
                 onChange={handleChange}
-                className="border border-[#F37A21] px-4 py-2 rounded-lg"
+                className="border border-[#5D9028] px-4 py-2 rounded-lg"
               >
                 <option value="">ოთახის ტიპი</option>
 
@@ -251,28 +246,28 @@ export default function StudentDashboard() {
             <div className="flex flex-wrap gap-4 items-center mt-8">
               <button
                 onClick={handleSearch}
-                className="bg-[#F37A21] text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
+                className="bg-[#5D9028] text-white px-5 py-2 rounded-lg hover:bg-green-600 transition"
               >
                 ძებნა
               </button>
 
               <button
                 onClick={handleClear}
-                className="border border-orange-500 text-orange-500 px-5 py-2 rounded-lg hover:bg-orange-50 transition flex items-center justify-center"
+                className="border border-[#5D9028] text-[#5D9028] px-5 py-2 rounded-lg hover:bg-green-100 transition flex items-center justify-center"
               >
-                <DeleteIcon className="text-[#F37A21]" />
+                <DeleteIcon className="text-[#5D9028]" />
               </button>
             </div>
           </div>
 
-          <div className="border border-[#F37A21] rounded-xl bg-white overflow-hidden">
+          <div className="border border-[#5D9028] rounded-xl bg-white overflow-hidden">
             {results.length === 0 ? (
               <div className="h-[300px] flex items-center justify-center text-gray-400">
                 გთხოვთ შეავსოთ ფილტრები და დააჭიროთ ძებნას
               </div>
             ) : (
               <table className="w-full">
-                <thead className="bg-orange-400 text-white">
+                <thead className="bg-[#5D9028] text-white">
                   <tr>
                     <th className="p-3 text-left">მისამართი</th>
 
@@ -286,7 +281,10 @@ export default function StudentDashboard() {
 
                 <tbody>
                   {currentRooms.map((room) => (
-                    <tr key={room.id} className="border-t hover:bg-gray-50">
+                    <tr
+                      key={room.id}
+                      className="border-t text-left hover:bg-gray-50"
+                    >
                       <td className="p-3">{room.buildingName} კორპუსი</td>
 
                       <td className="p-3">{filters.date}</td>
@@ -298,7 +296,7 @@ export default function StudentDashboard() {
                       <td className="p-3">
                         <button
                           onClick={() => handleOpenTimeSlots(room)}
-                          className="bg-orange-500 text-white px-4 py-1 rounded hover:bg-orange-600 transition"
+                          className="bg-[#5D9028] text-white px-4 py-1 rounded hover:bg-green-600 transition"
                         >
                           დაჯავშნა
                         </button>
@@ -328,14 +326,22 @@ export default function StudentDashboard() {
               currentPage={currentPage}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
+              color={"#5D9028"}
             />
           </div>
         </div>
       </div>
-
+      {bookingError && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-600 px-6 py-3 rounded-lg text-sm shadow-md">
+          {bookingError}
+        </div>
+      )}
       <BookingConfirmModal
         open={confirmRoom}
-        onClose={() => setConfirmRoom(null)}
+        onClose={() => {
+          setConfirmRoom(null);
+          setBookingError("");
+        }}
         onConfirm={handleCreateReservation}
       />
 
@@ -345,15 +351,6 @@ export default function StudentDashboard() {
         qr={selectedRoom?.qr}
       />
 
-      <LogoutModal
-        open={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={() => {
-          logout();
-
-          navigate("/");
-        }}
-      />
       <Footer />
     </div>
   );

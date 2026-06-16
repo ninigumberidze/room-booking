@@ -6,7 +6,6 @@ import HistoryIcon from "../components/Icons/HistoryIcon";
 import { useEffect } from "react";
 import { reservationService } from "../services/reservationService";
 import Header from "../components/Layout/Header";
-import LogoutModal from "../shared/components/LogoutModal";
 import useAuthStore from "../store/authStore";
 import ReservationCancelModal from "../features/user/ReservationCancelModal";
 import QRModal from "../features/user/QRModal";
@@ -15,20 +14,19 @@ import ContactCard from "../features/user/ContactCard";
 import BookingHistoryTable from "../features/user/BookingHistoryTable";
 import ProfileHeader from "../components/Layout/ProfileHeader";
 import Footer from "../components/Layout/Footer";
-
+import { useLogout } from "../shared/hooks/useLogout";
 export default function StudentProfile() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
-  const logout = useAuthStore((state) => state.logout);
   const [historyPage, setHistoryPage] = useState(1);
   const user = useAuthStore((state) => state.user);
   const [selectedQR, setSelectedQR] = useState(null);
   const bookingsPerPage = 6;
   const [reservationToCancel, setReservationToCancel] = useState(null);
   const totalHistoryPages = Math.ceil(bookings.length / bookingsPerPage);
+
   const handleCancelClick = (booking) => {
     setReservationToCancel(booking);
   };
@@ -82,7 +80,6 @@ export default function StudentProfile() {
       <ProfileHeader
         userName={`${user?.firstName || ""} ${user?.lastName || ""}`}
         onProfileClick={() => navigate("/student-dashboard")}
-        onLogoutClick={() => setShowLogoutModal(true)}
       ></ProfileHeader>
 
       <div className="max-w-6xl mx-auto p-8">
@@ -149,14 +146,7 @@ export default function StudentProfile() {
         onClose={() => setReservationToCancel(null)}
         onConfirm={handleConfirmCancel}
       />
-      <LogoutModal
-        open={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={() => {
-          logout();
-          navigate("/");
-        }}
-      />
+
       <Footer />
     </div>
   );

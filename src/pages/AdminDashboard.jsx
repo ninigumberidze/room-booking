@@ -5,7 +5,8 @@ import ProjectLogo from "../components/Icons/ProjectLogo";
 import SearchIcon from "../components/Icons/SearchIcon";
 import LogoutModal from "../shared/components/LogoutModal";
 import Footer from "../components/Layout/Footer";
-import { useUser, useLogout } from "../store/authStore";
+import { useUser } from "../store/authStore";
+import { useLogout } from "../shared/hooks/useLogout";
 //  Mock
 const mockAdmin = {
   firstName: "ნინიკო",
@@ -49,18 +50,14 @@ const mockRooms = [
 export default function AdminDashboard() {
   const navigate = useNavigate();
 
-  const logout = useLogout();
-
   const [filters, setFilters] = useState({
     search: "",
     faculty: "",
     direction: "",
     onlyFree: false,
   });
-
+  const logoutModal = useLogout();
   const [results, setResults] = useState(mockRooms);
-
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -245,14 +242,6 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <LogoutModal
-        open={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={() => {
-          logout();
-          navigate("/");
-        }}
-      />
       <Footer />
     </div>
   );

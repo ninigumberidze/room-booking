@@ -27,15 +27,15 @@ export default function Login() {
 
   const validate = () => {
     if (!form.email || !form.password) {
-      return "All fields are required";
+      return "გთხოვთ შეავსოთ ყველა ველი";
     }
 
     if (!/\S+@\S+\.\S+/.test(form.email)) {
-      return "Invalid email format";
+      return "ელ-ფოსტის ფორმატი არასწორია";
     }
 
     if (form.password.length < 6) {
-      return "Password must be at least 6 characters";
+      return "პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო";
     }
 
     return null;
@@ -69,7 +69,7 @@ export default function Login() {
 
           const profileResponse = await authService.getProfile();
 
-          console.log("PROFILE:", profileResponse.data);
+          console.log("profile:", profileResponse.data);
 
           setUser(profileResponse.data);
 
@@ -102,7 +102,7 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <div className="w-full  bg-white p-12 rounded-xl border-2 border-[#1A71B7]">
+      <div className="w-full md:w-768 lg:w-960 bg-white p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl border-2 border-[#1A71B7]">
         <h2 className="text-3xl font-bold text-center mb-8 text-[#1A71B7]">
           სისტემაში შესვლა
         </h2>

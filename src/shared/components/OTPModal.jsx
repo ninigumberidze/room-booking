@@ -6,8 +6,9 @@ export default function OTPModal({
   onConfirm,
   onResend,
   resendTimer,
+  onClose,
   title = "კოდის შეყვანა",
-  description = "შეიყვანეთ ელ-ფოსტაზე გამოგზავნილი ერთჯერადი კოდი",
+  description = "გთხოვთ შეიყვანეთ ელ-ფოსტაზე გამოგზავნილი ერთჯერადი კოდი",
 }) {
   if (!open) return null;
 
@@ -25,8 +26,14 @@ export default function OTPModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl p-8 w-[600px]">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-xl p-8 w-[600px]"
+      >
         <h2 className="text-2xl font-bold text-green-700 text-center mb-4">
           {title}
         </h2>

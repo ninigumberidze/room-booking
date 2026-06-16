@@ -2,7 +2,8 @@ import useAuthStore from "../store/authStore";
 import StudentDashboard from "./StudentDashboard";
 import LecturerDashboard from "./LecturerDashboard";
 import AdminDashboard from "./AdminDashboard";
-import { useUser, useLogout } from "../store/authStore";
+import { useUser } from "../store/authStore";
+import { useLogout } from "../shared/hooks/useLogout";
 export default function Dashboard() {
   // const user = useAuthStore((state) => state.user);
   const user = useUser();

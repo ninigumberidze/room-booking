@@ -30,7 +30,7 @@ export default function TimeSlotModal({
                 }
                 className={`border rounded-lg p-3 ${
                   selectedSlots[0]?.label === option.label
-                    ? "bg-orange-500 text-white"
+                    ? "bg-[#5D9028] text-white"
                     : ""
                 }`}
               >
@@ -52,7 +52,7 @@ export default function TimeSlotModal({
           <button
             disabled={selectedSlots.length === 0}
             onClick={onContinue}
-            className="bg-orange-500 text-white px-4 py-2 rounded"
+            className="bg-[#5D9028] text-white px-4 py-2 rounded"
           >
             გაგრძელება
           </button>

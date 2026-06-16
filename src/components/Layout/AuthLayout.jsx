@@ -20,7 +20,7 @@ export default function AuthLayout({ children }) {
           >
             <img src={logo} alt="Logo" className="w-lg" />
 
-            <p className="text-md font-bold text-left text-[#1A71B7]">
+            <p className="text-xl font-semibold text-left text-[#1A71B7]">
               ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი
             </p>
           </div>

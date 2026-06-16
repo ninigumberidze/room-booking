@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Layout/Header";
-import LogoutModal from "../shared/components/LogoutModal";
+
 import useAuthStore from "../store/authStore";
 import BookIcon from "../components/Icons/BookIcon";
 import Pagination from "../shared/components/Pagination";
@@ -10,12 +10,13 @@ import LecturerTimeModal from "../features/booking/LecturerTimeModal";
 import SemesterBookingModal from "../features/booking/SemesterBookingModal";
 import { reservationService } from "../services/reservationService";
 import Footer from "../components/Layout/Footer";
-import { useUser, useLogout } from "../store/authStore";
+import { useUser } from "../store/authStore";
+import { useLogout } from "../shared/hooks/useLogout";
 
 export default function LecturerDashboard() {
   const navigate = useNavigate();
   const user = useUser();
-  const logout = useLogout();
+  const [bookingError, setBookingError] = useState("");
   const [filterData, setFilterData] = useState(null);
   const [filters, setFilters] = useState({
     bookingType: "single",
@@ -51,7 +52,6 @@ export default function LecturerDashboard() {
 
   const [bookingQr, setBookingQr] = useState(null);
   const [semesterSuccess, setSemesterSuccess] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     reservationService
@@ -144,7 +144,7 @@ export default function LecturerDashboard() {
       }
     } catch (err) {
       console.error(err);
-      alert(
+      setBookingError(
         "დაჯავშნა ვერ მოხერხდა — " +
           (err.response?.data?.detail || err.message),
       );
@@ -157,7 +157,6 @@ export default function LecturerDashboard() {
       <Header
         userName={`${user?.firstName} ${user?.lastName}`}
         onProfileClick={() => navigate("/lecturer-profile")}
-        onLogoutClick={() => setShowLogoutModal(true)}
       />
 
       <div className="p-6">
@@ -205,7 +204,7 @@ export default function LecturerDashboard() {
                 ))}
               </select>
 
-              {filters.bookingType === "semester" && (
+              {/* {filters.bookingType === "semester" && (
                 <select
                   name="weekDay"
                   value={filters.weekDay}
@@ -219,7 +218,7 @@ export default function LecturerDashboard() {
                   <option value="thursday">ხუთშაბათი</option>
                   <option value="friday">პარასკევი</option>
                 </select>
-              )}
+              )} */}
             </div>
 
             <div className="flex gap-4 items-center mt-8">
@@ -256,7 +255,10 @@ export default function LecturerDashboard() {
                   </thead>
                   <tbody>
                     {currentRooms.map((room) => (
-                      <tr key={room.id} className="border-t hover:bg-gray-50">
+                      <tr
+                        key={room.id}
+                        className="border-t text-left hover:bg-gray-50"
+                      >
                         <td className="p-3">{room.buildingName} კორპუსი</td>
                         <td className="p-3">{filters.date || "—"}</td>
                         <td className="p-3">
@@ -306,7 +308,10 @@ export default function LecturerDashboard() {
             </div>
             <div className="flex justify-end gap-3">
               <button
-                onClick={() => setConfirmRoom(null)}
+                onClick={() => {
+                  setConfirmRoom(null);
+                  setBookingError("");
+                }}
                 className="border border-gray-300 px-4 py-2 rounded-lg"
               >
                 გაუქმება
@@ -329,10 +334,10 @@ export default function LecturerDashboard() {
           className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
         >
           <div className="bg-white rounded-xl p-8 w-[500px] text-center">
-            <h3 className="text-2xl font-bold mb-3">
-              აუდიტორია წარმატებით დაიჯავშნა
+            <h3 className="text-2xl font-bold mb-3 text-[#5D9028]">
+              აუდიტორია წარმატებით დაიჯავშნა !
             </h3>
-            <p className="text-gray-500">ჯავშანის QR გამოგზავნილია მეილზე!</p>
+            <p className="text-gray-500">ჯავშანის QR გამოგზავნილია მეილზე</p>
           </div>
         </div>
       )}
@@ -370,31 +375,36 @@ export default function LecturerDashboard() {
             !semesterData.startDate ||
             !semesterData.endDate
           ) {
-            alert("შეავსეთ ყველა ველი");
+            setBookingError("შეავსეთ ყველა ველი");
             return;
           }
           if (
             filterData?.maxDate &&
             semesterData.endDate > filterData.maxDate
           ) {
-            alert(
+            setBookingError(
               `დასრულების თარიღი არ უნდა აღემატებოდეს ${filterData.maxDate}-ს`,
             );
             return;
           }
+          setBookingError("");
           setSemesterModal(false);
           setShowTimeModal(true);
         }}
       />
+      {bookingError && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-600 px-6 py-3 rounded-lg text-sm flex items-center gap-4">
+          {bookingError}
+          <button
+            onClick={() => setBookingError("")}
+            className="text-red-400 hover:text-red-600 font-medium"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
-      <LogoutModal
-        open={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-        onConfirm={() => {
-          logout();
-          navigate("/");
-        }}
-      />
+      <Footer />
       <Footer />
     </div>
   );

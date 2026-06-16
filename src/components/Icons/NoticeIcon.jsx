@@ -1,9 +1,9 @@
 const NoticeIcon = ({ className, color = "#1A71B7" }) => {
   return (
     <svg
-      width="25"
-      height="25"
-      viewBox="0 0 25 25"
+      width="50"
+      height="50"
+      viewBox="0 0 30 30"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
