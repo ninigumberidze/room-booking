@@ -36,14 +36,11 @@ export const reservationService = {
   deleteReservation(id) {
     return api.delete(`/api/reservations/${id}`);
   },
+  getAdminReservations: () => api.get("/api/reservations/admin"),
 
-  deleteReservationManagement(reservationId) {
-    return api.delete(`/api/reservations/management/${reservationId}`);
-  },
+  deleteReservationManagement: (id) =>
+    api.delete(`/api/reservations/management/${id}`),
 
-  deleteSeriesManagement(reservationSeriesId) {
-    return api.delete(
-      `/api/reservations/management/series/${reservationSeriesId}`,
-    );
-  },
+  deleteSeriesManagement: (id) =>
+    api.delete(`/api/reservations/management/series/${id}`),
 };

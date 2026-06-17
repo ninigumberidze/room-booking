@@ -17,3 +17,19 @@ api.interceptors.request.use((config) => {
   return config;
 });
 export default api;
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("expiresAtUtc");
+      localStorage.removeItem("user");
+
+      window.location.href = "/";
+    }
+
+    return Promise.reject(error);
+  },
+);

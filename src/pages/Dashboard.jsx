@@ -5,10 +5,9 @@ import AdminDashboard from "./AdminDashboard";
 import { useUser } from "../store/authStore";
 import { useLogout } from "../shared/hooks/useLogout";
 export default function Dashboard() {
-  // const user = useAuthStore((state) => state.user);
   const user = useUser();
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>იტვირთება...</div>;
   }
   console.log(user);
   switch (user.userType) {

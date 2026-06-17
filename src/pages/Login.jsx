@@ -170,7 +170,7 @@ export default function Login() {
                   : "bg-blue-600 hover:bg-blue-700"
               }`}
           >
-            {loading ? "Logging in..." : "ავტორიზაცია"}
+            {loading ? "სისტემაში შესვლა..." : "ავტორიზაცია"}
           </button>
         </form>
 

@@ -82,79 +82,6 @@ export default function ForgotPassword() {
     setStep(3);
   };
 
-  // const handlePasswordSubmit = async () => {
-  //   setError("");
-
-  //   const passwordRegex =
-  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
-
-  //   if (!passwordRegex.test(password)) {
-  //     setError("პაროლი არ აკმაყოფილებს მოთხოვნებს");
-  //     return;
-  //   }
-
-  //   if (password !== confirmPassword) {
-  //     setError("პაროლები არ ემთხვევა");
-  //     return;
-  //   }
-
-  //   try {
-  //     const { data } = await authService.resetPassword({
-  //       resetToken,
-  //       otp: otp.join(""),
-  //       newPassword: password,
-  //       reenteredPassword: confirmPassword,
-  //     });
-
-  //     console.log("RESET RESPONSE:", data);
-
-  //     switch (data.status) {
-  //       case 1:
-  //         setStep(4);
-
-  //         setTimeout(() => {
-  //           navigate("/");
-  //         }, 2000);
-  //         break;
-
-  //       case 2:
-  //         setError("არასწორი სესია");
-  //         break;
-
-  //       case 3:
-  //         setError("სესიის ვადა ამოიწურა");
-  //         break;
-
-  //       case 4:
-  //         setError("კოდის ვადა ამოიწურა");
-  //         break;
-
-  //       case 5:
-  //         setError("OTP კოდი არასწორია");
-  //         break;
-
-  //       case 6:
-  //         setError("მცდელობების ლიმიტი ამოიწურა");
-  //         break;
-
-  //       case 7:
-  //         setError("მომხმარებელი ვერ ახდენს პაროლის აღდგენას");
-  //         break;
-
-  //       default:
-  //         setError("დაფიქსირდა შეცდომა");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-
-  //     if (err.response?.data?.detail) {
-  //       setError(err.response.data.detail);
-  //     } else {
-  //       setError("პაროლის შეცვლა ვერ მოხერხდა");
-  //     }
-  //   }
-  // };
-
   const handlePasswordSubmit = async () => {
     setError("");
 
@@ -377,14 +304,14 @@ export default function ForgotPassword() {
               <button
                 disabled={resendTimer > 0}
                 onClick={async () => {
-                  console.log("RESET TOKEN:", resetToken);  
+                  console.log("RESET TOKEN:", resetToken);
                   try {
                     const { data } = await authService.resendPasswordResetOtp({
                       resetToken,
                     });
                     setOtp(["", "", "", ""]);
                     setError("");
-                    setResendTimer(data.resendCooldownSeconds || 60); // ← fix this
+                    setResendTimer(data.resendCooldownSeconds || 60);
                   } catch (err) {
                     setError("კოდის ხელახლა გაგზავნა ვერ მოხერხდა");
                   }
