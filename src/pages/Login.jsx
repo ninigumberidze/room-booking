@@ -50,7 +50,10 @@ export default function Login() {
       setError(validationError);
       return;
     }
-
+    // console.log({
+    //   email: form.email,
+    //   password: form.password,
+    // });
     try {
       setLoading(true);
 
@@ -68,8 +71,6 @@ export default function Login() {
           });
 
           const profileResponse = await authService.getProfile();
-
-          console.log("profile:", profileResponse.data);
 
           setUser(profileResponse.data);
 
@@ -92,8 +93,9 @@ export default function Login() {
           setError("დაფიქსირდა შეცდომა");
       }
     } catch (err) {
-      console.log(err);
-
+      console.log("error:", err);
+      console.log("error response:", err?.response);
+      console.log("error data:", err?.response?.data);
       setError("ავტორიზაცია ვერ შესრულდა");
     } finally {
       setLoading(false);
@@ -122,6 +124,7 @@ export default function Login() {
               type="email"
               name="email"
               placeholder="example@mail.com"
+              autoComplete="email"
               value={form.email}
               onChange={handleChange}
               className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
@@ -136,6 +139,7 @@ export default function Login() {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="••••••••"
+                autoComplete="current-password"
                 value={form.password}
                 onChange={handleChange}
                 className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7] pr-12"
@@ -164,11 +168,11 @@ export default function Login() {
             type="submit"
             disabled={loading}
             className={`w-full p-3 rounded-lg text-white font-medium transition 
-              ${
-                loading
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              }`}
+                ${
+                  loading
+                    ? "bg-blue-400 cursor-not-allowed"
+                    : "bg-blue-600 hover:bg-blue-700"
+                }`}
           >
             {loading ? "სისტემაში შესვლა..." : "ავტორიზაცია"}
           </button>

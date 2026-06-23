@@ -1,6 +1,8 @@
 import ProjectLogo from "../Icons/ProjectLogo";
 import { useLogout } from "../../shared/hooks/useLogout";
 import LogoutModal from "../../shared/components/LogoutModal";
+import ExitIcon from "../Icons/ExitIcon";
+import PersonIcon from "../Icons/PersonIcon";
 
 export default function Header({
   userName,
@@ -35,9 +37,9 @@ export default function Header({
 
           <button
             onClick={logoutModal.open}
-            className="bg-[#5D9028] px-4 py-2 rounded-lg hover:bg-red-600 transition"
+            className=" px-4 py-2 rounded-lg hover:bg-red-600 transition border border-white text-white hover:text-white"
           >
-            გასვლა
+            <ExitIcon className="w-5 h-4" color="white" />
           </button>
         </div>
       </div>

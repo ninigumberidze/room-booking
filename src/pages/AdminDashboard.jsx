@@ -110,7 +110,7 @@ export default function AdminDashboard() {
         color="#5D9028"
       />
 
-      <div className="p-6">
+      <div className="p-6 ">
         <div className="border-2 border-[#5D9028] rounded-xl p-5 bg-white relative mb-6">
           <div className="flex items-center gap-2 absolute -top-3 left-5 bg-white px-2">
             <SearchIcon />
@@ -248,17 +248,17 @@ export default function AdminDashboard() {
                       </td>
                       <td className="p-3">
                         <span
-                          className={`px-2 py-1 rounded text-xs text-white ${
+                          className={`px-3 py-1 rounded text-sm text-white  ${
                             r.status === "Active"
                               ? "bg-green-500"
-                              : "bg-gray-400"
+                              : "bg-gray-300 cursor-not-allowed"
                           }`}
                         >
                           {r.status === "Active" ? "აქტიური" : "გაუქმებული"}
                         </span>
                         {r.isRecurring && (
                           <span className="ml-1 px-2 py-1 rounded text-xs bg-blue-100 text-blue-700">
-                            სემ.
+                            სემ
                           </span>
                         )}
                       </td>

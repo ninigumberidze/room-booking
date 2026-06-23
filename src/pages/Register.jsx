@@ -72,19 +72,19 @@ export default function Register() {
       !form.email ||
       !form.password
     ) {
-      return "Please fill all fields";
+      return "გთხოვთ შეავსოთ ყველა ველი";
     }
 
     if (!/\S+@\S+\.\S+/.test(form.email)) {
-      return "Invalid email format";
+      return "ელ-ფოსტის ფორმატი არასწორია";
     }
 
     if (form.password.length < 6) {
-      return "Password must be at least 6 characters";
+      return "პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო";
     }
 
     if (!form.agree) {
-      return "You must accept terms";
+      return "გთხოვთ დაეთანხმოთ მომსახურების პირობებს";
     }
 
     return null;
@@ -116,16 +116,16 @@ export default function Register() {
       };
       console.log(payload);
       const { data } = await authService.register(payload);
-      console.log("REGISTER RESPONSE:", data);
+      console.log("register data:", data);
       setVerificationToken(data.verificationToken);
       setResendTimer(data.resendCooldownSeconds);
 
       setShowOtpModal(true);
     } catch (err) {
-      console.log("FULL ERROR:", err);
-      console.log("BACKEND RESPONSE:", err.response?.data);
+      console.log("error:", err);
+      console.log("backend response:", err.response?.data);
 
-      setError(err.response?.data?.detail || "Registration failed");
+      setError(err.response?.data?.detail || "რეგისტრაცია ვერ შესრულდა");
     }
   };
 
@@ -143,7 +143,7 @@ export default function Register() {
         setShowSuccessModal(true);
       }
     } catch (err) {
-      console.log(err);
+      console.log("error:", err);
       setOtpError("კოდი არასწორია");
     }
   };

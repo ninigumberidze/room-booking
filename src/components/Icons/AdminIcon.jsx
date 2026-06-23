@@ -15,7 +15,7 @@ const SearchIcon = ({ className, color = "#1A71B7" }) => {
         height="198"
         rx="4"
         stroke="#1A71B7"
-        stroke-width="2"
+        strokeWidth="2"
       />
       <rect
         x="3"

@@ -42,7 +42,7 @@ export default function BookingHistoryTable({
                   </td>
 
                   <td className="p-3">
-                    {booking.roomNumber} - {booking.roomName}
+                    Room {booking.roomNumber}- Building {booking.buildingId}
                   </td>
 
                   {showType && <td className="p-3">{booking.roomTypeName}</td>}

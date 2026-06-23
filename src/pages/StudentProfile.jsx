@@ -15,6 +15,7 @@ import BookingHistoryTable from "../features/user/BookingHistoryTable";
 import ProfileHeader from "../components/Layout/ProfileHeader";
 import Footer from "../components/Layout/Footer";
 import { useLogout } from "../shared/hooks/useLogout";
+import StudentSidebar from "../components/Layout/StudentSidebar";
 export default function StudentProfile() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
@@ -74,79 +75,80 @@ export default function StudentProfile() {
       console.error(error);
     }
   };
-  console.log("BOOKING:", bookings[0]);
+  console.log("BOOKING:", bookings[0]);   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <ProfileHeader
         userName={`${user?.firstName || ""} ${user?.lastName || ""}`}
         onProfileClick={() => navigate("/student-dashboard")}
       ></ProfileHeader>
-
-      <div className="max-w-6xl mx-auto p-8">
-        <ProfileInfoCard
-          firstName={user?.firstName}
-          lastName={user?.lastName}
-          birthDate={user?.dateOfBirth}
-          status={user?.userType}
-          gender={user?.gender}
-        />
-        <ContactCard email={user?.email} phone={user?.phoneNumber} />
-        <div className="border-2 border-[#1A71B7] rounded-lg bg-white p-6 flex justify-between items-center">
-          <div className="flex items-center gap-2 text-[#1A71B7] font-medium">
-            <HistoryIcon />
-            <span>ისტორია</span>
-          </div>
-
-          <button
-            onClick={() => setShowHistory(true)}
-            className="border-2 border-[#1A71B7] text-[#1A71B7] px-5 py-2 rounded hover:bg-[#1A71B7] hover:text-white transition"
-          >
-            სრულად ნახვა
-          </button>
-        </div>
-      </div>
-
-      {showHistory && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40">
-          <div className="bg-white rounded-lg w-[1100px] overflow-hidden">
-            <div className="bg-[#1A71B7] text-white px-6 py-4 flex justify-between items-center">
-              <div className="flex gap-2 items-center justify-center ">
-                <HistoryIcon className="fill-white" />
-                <h2 className="text-xl text-white font-semibold">
-                  ჩანაწერების ისტორია
-                </h2>
-              </div>
-              <button
-                onClick={() => setShowHistory(false)}
-                className="text-2xl"
-              >
-                ✕
-              </button>
+      <div className="flex flex-1 ">
+        <StudentSidebar activeNav="profile" color="#1A71B7" />
+        <div className="flex-1 p-8">
+          <ProfileInfoCard
+            firstName={user?.firstName}
+            lastName={user?.lastName}
+            birthDate={user?.dateOfBirth}
+            status={user?.userType}
+            gender={user?.gender}
+          />
+          <ContactCard email={user?.email} phone={user?.phoneNumber} />
+          <div className="border-2 border-[#1A71B7] rounded-lg bg-white p-6 flex justify-between items-center">
+            <div className="flex items-center gap-2 text-[#1A71B7] font-medium">
+              <HistoryIcon />
+              <span>ისტორია</span>
             </div>
 
-            <BookingHistoryTable
-              bookings={currentBookings}
-              currentPage={historyPage}
-              totalPages={totalHistoryPages}
-              setCurrentPage={setHistoryPage}
-              onSelectBooking={handleShowQR}
-              onCancelBooking={handleCancelClick}
-            />
+            <button
+              onClick={() => setShowHistory(true)}
+              className="border-2 border-[#1A71B7] text-[#1A71B7] px-5 py-2 rounded hover:bg-[#1A71B7] hover:text-white transition"
+            >
+              სრულად ნახვა
+            </button>
           </div>
         </div>
-      )}
 
-      <QRModal
-        open={!!selectedQR}
-        onClose={() => setSelectedQR(null)}
-        qrImage={selectedQR}
-      />
-      <ReservationCancelModal
-        open={!!reservationToCancel}
-        onClose={() => setReservationToCancel(null)}
-        onConfirm={handleConfirmCancel}
-      />
+        {showHistory && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40">
+            <div className="bg-white rounded-lg w-[1100px] overflow-hidden">
+              <div className="bg-[#1A71B7] text-white px-6 py-4 flex justify-between items-center">
+                <div className="flex gap-2 items-center justify-center ">
+                  <HistoryIcon className="fill-white" />
+                  <h2 className="text-xl text-white font-semibold">
+                    ჩანაწერების ისტორია
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setShowHistory(false)}
+                  className="text-2xl"
+                >
+                  ✕
+                </button>
+              </div>
 
+              <BookingHistoryTable
+                bookings={currentBookings}
+                currentPage={historyPage}
+                totalPages={totalHistoryPages}
+                setCurrentPage={setHistoryPage}
+                onSelectBooking={handleShowQR}
+                onCancelBooking={handleCancelClick}
+              />
+            </div>
+          </div>
+        )}
+
+        <QRModal
+          open={!!selectedQR}
+          onClose={() => setSelectedQR(null)}
+          qrImage={selectedQR}
+        />
+        <ReservationCancelModal
+          open={!!reservationToCancel}
+          onClose={() => setReservationToCancel(null)}
+          onConfirm={handleConfirmCancel}
+        />
+      </div>
       <Footer />
     </div>
   );
