@@ -1,4 +1,4 @@
-import roomImage from "../../assets/images/room.png";
+import roomImage from "../../assets/images/Room.png";
 import BookingIcon from "../../components/Icons/BookingIcon";
 import RoomIcon from "../../components/Icons/RoomIcon";
 import DateIcon from "../../components/Icons/DateIcon";
