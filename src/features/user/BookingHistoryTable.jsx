@@ -88,6 +88,7 @@ export default function BookingHistoryTable({
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
+        color="#1A71B7"
       />
     </div>
   );

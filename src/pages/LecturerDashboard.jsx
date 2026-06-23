@@ -346,7 +346,7 @@ export default function LecturerDashboard() {
         open={bookingQr}
         onClose={() => setBookingQr(null)}
         qr={bookingQr?.qr}
-        title="აუდიტორია წარმატებით დაჯავშნდა"
+        title="აუდიტორია წარმატებით დაიჯავშნა"
       />
 
       <LecturerTimeModal
