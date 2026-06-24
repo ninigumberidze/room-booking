@@ -2,11 +2,7 @@ import PersonIcon from "../Icons/PersonIcon";
 import BookIcon from "../Icons/BookIcon";
 import { useNavigate } from "react-router-dom";
 
-export default function StudentSidebar({
-  activeNav,
-  color = "#5D9028",
-  hoverColor = "#8eb169",
-}) {
+export default function LecturerSidebar({ activeNav, color = "#1A71B7" }) {
   const navigate = useNavigate();
 
   const navItems = [
@@ -14,17 +10,18 @@ export default function StudentSidebar({
       id: "dashboard",
       icon: BookIcon,
       label: "დაშბორდი",
-      action: () => navigate("/student-dashboard"),
+      action: () => navigate("/lecturer-dashboard"),
     },
     {
       id: "profile",
       icon: PersonIcon,
       label: "პროფილი",
-      action: () => navigate("/student-profile"),
+      action: () => navigate("/lecturer-profile"),
     },
   ];
+
   return (
-    <aside className="w-56 bg-white flex flex-col  flex-shrink-0 overflow-y-auto rounded-xl m-4">
+    <aside className="w-56 bg-white flex flex-col flex-shrink-0 overflow-y-auto rounded-xl m-4">
       <nav className="flex-1 px-3 py-4 space-y-0.5">
         {navItems.map((item) => {
           const Icon = item.icon;

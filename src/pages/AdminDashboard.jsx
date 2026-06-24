@@ -7,11 +7,10 @@ import { useUser } from "../store/authStore";
 import { reservationService } from "../services/reservationService";
 import { USER_TYPE_LABEL } from "../shared/utils/constants";
 import SearchIcon from "../components/Icons/SearchIcon";
-
+import AdminSearchPanel from "../features/admin/AdminSearchPanel";
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const user = useUser();
-
   const [reservations, setReservations] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +18,6 @@ export default function AdminDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [cancelTarget, setCancelTarget] = useState(null);
   const itemsPerPage = 8;
-
   const [filters, setFilters] = useState({
     search: "",
     userType: "",
@@ -111,80 +109,12 @@ export default function AdminDashboard() {
       />
 
       <div className="p-6 ">
-        <div className="border-2 border-[#5D9028] rounded-xl p-5 bg-white relative mb-6">
-          <div className="flex items-center gap-2 absolute -top-3 left-5 bg-white px-2">
-            <SearchIcon />
-            <h3 className="text-[#5D9028] font-medium">საძიებო პანელი</h3>
-          </div>
-
-          <div className="flex flex-wrap gap-4 items-center mt-4 justify-between">
-            <div className="flex flex-wrap gap-4 items-center">
-              <div className="relative">
-                <input
-                  name="search"
-                  placeholder="მეილი"
-                  value={filters.search}
-                  onChange={handleChange}
-                  className="border-2 border-[#5D9028] rounded-lg px-4 py-2 pr-10 w-64"
-                />
-                <span className="absolute right-3 top-2.5 text-[#5D9028]">
-                  <SearchIcon />
-                </span>
-              </div>
-
-              <select
-                name="userType"
-                value={filters.userType}
-                onChange={handleChange}
-                className="border-2 border-[#5D9028] rounded-lg px-4 py-2"
-              >
-                <option value="">მომხმარებლის ტიპი</option>
-                <option value="0">სტუდენტი</option>
-                <option value="1">ლექტორი</option>
-              </select>
-
-              <select
-                name="status"
-                value={filters.status}
-                onChange={handleChange}
-                className="border-2 border-[#5D9028] rounded-lg px-4 py-2"
-              >
-                <option value="">სტატუსი</option>
-                <option value="Active">აქტიური</option>
-                <option value="Cancelled">გაუქმებული</option>
-              </select>
-
-              <select
-                name="roomType"
-                value={filters.roomType}
-                onChange={handleChange}
-                className="border-2 border-[#5D9028] rounded-lg px-4 py-2"
-              >
-                <option value="">ოთახის ტიპი</option>
-                <option value="1">სალექციო</option>
-                <option value="2">საბიბლიოთეკო</option>
-                <option value="3">სალაბორატორიო</option>
-                <option value="4">პრაქტიკული</option>
-              </select>
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                onClick={handleSearch}
-                className="bg-[#5D9028] text-white px-5 py-2 rounded-lg hover:bg-green-700 transition"
-              >
-                ძებნა
-              </button>
-              <button
-                onClick={handleReset}
-                className="border-2 border-[#5D9028] text-[#5D9028] px-5 py-2 rounded-lg hover:bg-green-50 transition"
-              >
-                გასუფთავება
-              </button>
-            </div>
-          </div>
-        </div>
-
+        <AdminSearchPanel
+          filters={filters}
+          onChange={handleChange}
+          onSearch={handleSearch}
+          onReset={handleReset}
+        />
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-600 px-4 py-3 rounded-lg mb-4 text-sm flex items-center justify-between">
             {error}
@@ -283,6 +213,7 @@ export default function AdminDashboard() {
                 currentPage={currentPage}
                 totalPages={totalPages}
                 setCurrentPage={setCurrentPage}
+                color="#5D9028"
               />
             </>
           )}
@@ -302,7 +233,7 @@ export default function AdminDashboard() {
                 ეს სემესტრული ჯავშანია — გაუქმდება მთელი სერია.
               </p>
             )}
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex justify-between gap-3 mt-4">
               <button
                 onClick={() => setCancelTarget(null)}
                 className="border border-gray-300 px-4 py-2 rounded-lg text-sm"
@@ -319,8 +250,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 }

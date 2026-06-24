@@ -72,14 +72,14 @@ export default function SemesterBookingModal({
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 mt-6">
+        <div className="flex justify-between gap-3 mt-6">
           <button onClick={onClose} className="border px-4 py-2 rounded-lg">
             გაუქმება
           </button>
 
           <button
             onClick={onContinue}
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg"
+            className="bg-[#1A71B7] text-white px-4 py-2 rounded-lg"
           >
             დროის არჩევა
           </button>

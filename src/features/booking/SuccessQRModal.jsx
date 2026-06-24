@@ -17,19 +17,21 @@ export default function SuccessQRModal({
         className="bg-white rounded-xl p-6 w-[500px]"
       >
         <div className="flex">
-          <div className="w-1/2 text-center border-r pr-4">
+          <div
+            className={`text-center ${qr ? "w-1/2 border-r pr-4" : "w-full"}`}
+          >
             <h3 className="font-semibold text-lg">{title}</h3>
-
             <p className="text-sm text-gray-500 mt-2">{description}</p>
           </div>
 
-          <div className="w-1/2 flex flex-col items-center pl-4">
-            <img src={`data:image/png;base64,${qr}`} alt="QR Code" />
-
-            <p className="text-xs mt-2 text-center">
-              შეინახეთ არსებული QR კოდი
-            </p>
-          </div>
+          {qr && (
+            <div className="w-1/2 flex flex-col items-center pl-4">
+              <img src={`data:image/png;base64,${qr}`} alt="QR Code" />
+              <p className="text-xs mt-2 text-center">
+                შეინახეთ არსებული QR კოდი
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

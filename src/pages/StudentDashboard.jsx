@@ -214,7 +214,7 @@ export default function StudentDashboard() {
                   onClick={handleClear}
                   className="border border-gray-200 text-gray-500 hover:bg-gray-50 px-5 py-2 rounded-lg text-sm transition flex items-center gap-2"
                 >
-                  <DeleteIcon color="gray" />
+                  <DeleteIcon color="#5D9028" />
                   გასუფთავება
                 </button>
               </div>
@@ -229,6 +229,7 @@ export default function StudentDashboard() {
                       room={room}
                       selectedDate={filters.date}
                       onBook={handleOpenTimeSlots}
+                      color="#5D9028"
                     />
                   ))}
                 </div>

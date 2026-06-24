@@ -49,8 +49,8 @@ export default function LecturerTimeModal({
                   onClick={() => handleStartClick(slot)}
                   className={`border rounded-lg p-3 text-sm transition ${
                     selectedStart === slot.startBlock
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : "hover:border-orange-400"
+                      ? "bg-[#1A71B7] text-white border-[#1A71B7]"
+                      : "hover:border-[#1A71B7]"
                   }`}
                 >
                   {slot.startsAt}
@@ -70,8 +70,8 @@ export default function LecturerTimeModal({
                       }
                       className={`border rounded-lg p-3 text-sm transition ${
                         selectedDuration?.duration === opt.duration
-                          ? "bg-orange-500 text-white border-orange-500"
-                          : "hover:border-orange-400"
+                          ? "bg-[#1A71B7] text-white border-[#1A71B7]"
+                          : "hover:border-[#1A71B7]"
                       }`}
                     >
                       {opt.label}
@@ -83,7 +83,7 @@ export default function LecturerTimeModal({
           </>
         )}
 
-        <div className="flex justify-end gap-3">
+        <div className="flex justify-between gap-3">
           <button
             onClick={() => {
               onClose();
@@ -101,7 +101,7 @@ export default function LecturerTimeModal({
               setSelectedStart(null);
               setSelectedDuration(null);
             }}
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+            className="bg-[#1A71B7] text-white px-4 py-2 rounded-lg disabled:opacity-50"
           >
             გაგრძელება
           </button>

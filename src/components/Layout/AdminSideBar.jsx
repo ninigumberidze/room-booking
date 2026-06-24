@@ -12,36 +12,40 @@ export default function AdminSideBar({
   const navItems = [
     {
       id: "dashboard",
-      icon: <BookIcon color={color} />,
+      icon: BookIcon,
       label: "დაშბორდი",
       action: () => navigate("/admin-dashboard"),
     },
     {
       id: "profile",
-      icon: <PersonIcon color={color} />,
+      icon: PersonIcon,
       label: "პროფილი",
       action: () => navigate("/admin-profile"),
     },
   ];
-
   return (
     <aside className="w-56 bg-white flex flex-col  flex-shrink-0 overflow-y-auto rounded-xl m-4">
       <nav className="flex-1 px-3 py-4 space-y-0.5">
-        {navItems.map((item) => (
-          <button
-            key={item.id}
-            onClick={item.action}
-            className="flex items-center gap-3 w-full px-4 py-2.5 rounded-lg text-left transition-all"
-            style={{
-              backgroundColor: activeNav === item.id ? color : "transparent",
-              color: activeNav === item.id ? "#fff" : color,
-            }}
-          >
-            <span className="text-[17px]">{item.icon}</span>
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeNav === item.id;
 
-            <span className="text-sm font-medium">{item.label}</span>
-          </button>
-        ))}
+          return (
+            <button
+              key={item.id}
+              onClick={item.action}
+              className="flex items-center gap-3 w-full px-4 py-2.5 rounded-lg text-left transition-all"
+              style={{
+                backgroundColor: isActive ? color : "transparent",
+                color: isActive ? "#fff" : color,
+              }}
+            >
+              <Icon color={isActive ? "#fff" : color} />
+
+              <span className="text-sm font-medium">{item.label}</span>
+            </button>
+          );
+        })}
       </nav>
 
       <div className="m-3 mb-12 bg-[#F4F6FA] rounded-xl p-3">
