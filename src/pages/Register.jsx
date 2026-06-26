@@ -256,7 +256,7 @@ export default function Register() {
                 ვებ-სისტემაში რეგისტრაციის დასრულებით თქვენ ადასტურებთ, რომ
                 გაეცანით, გაიგეთ და ეთანხმებით მომსახურების პირობებს (Terms and
                 Conditions) და მონაცემთა დაცვის პოლიტიკას (Privacy Policy).
-              </button>{" "}
+              </button>
             </label>
 
             <button

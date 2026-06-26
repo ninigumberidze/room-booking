@@ -207,7 +207,7 @@ export default function StudentDashboard() {
                   className="bg-[#5D9028] hover:bg-[#4A7A20] active:scale-[0.98] text-white px-5 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2"
                 >
                   <SearchIcon color="white" />
-                  მოძებნა
+                  ძებნა
                 </button>
 
                 <button
@@ -249,7 +249,7 @@ export default function StudentDashboard() {
                   <SearchIcon color="#4A7A20" className="w-20 h-20" />
                 </span>
                 <p className="text-[#4A7A20] text-md text-center max-w-xs">
-                  გთხოვთ შეავსოთ ფილტრები და დააჭიროთ მოძებნას
+                  გთხოვთ შეავსოთ ფილტრები და დააჭიროთ ძებნას
                 </p>
               </div>
             )}
@@ -291,7 +291,6 @@ export default function StudentDashboard() {
         onClose={() => setSelectedRoom(null)}
         qr={selectedRoom?.qr}
       />
-      {/* <Footer />; */}
     </div>
   );
 }

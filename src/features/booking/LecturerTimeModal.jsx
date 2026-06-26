@@ -89,6 +89,7 @@ export default function LecturerTimeModal({
               onClose();
               setSelectedStart(null);
               setSelectedDuration(null);
+              setSelectedBlocks([]);
             }}
             className="border px-4 py-2 rounded-lg"
           >
@@ -100,6 +101,7 @@ export default function LecturerTimeModal({
               onContinue(selectedBlocks);
               setSelectedStart(null);
               setSelectedDuration(null);
+              setSelectedBlocks([]);
             }}
             className="bg-[#1A71B7] text-white px-4 py-2 rounded-lg disabled:opacity-50"
           >

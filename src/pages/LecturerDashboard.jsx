@@ -56,6 +56,20 @@ export default function LecturerDashboard() {
       .catch(console.error);
   }, []);
 
+  const handleCloseSemesterModal = () => {
+    setSemesterData({
+      title: "",
+      weekDay: "",
+      startDate: "",
+      endDate: "",
+    });
+
+    setSemesterModal(false);
+
+    setSelectedRoom(null);
+    setAvailableSlots([]);
+    setSelectedBlocks([]);
+  };
   const handleChange = (e) =>
     setFilters({ ...filters, [e.target.name]: e.target.value });
 
@@ -118,7 +132,14 @@ export default function LecturerDashboard() {
           title: "Lecture",
         });
         setConfirmRoom(null);
-        setSuccessData({ qr: data.qrCodeImage, semester: false });
+        setSelectedRoom(null);
+        setAvailableSlots([]);
+        setSelectedBlocks([]);
+
+        setSuccessData({
+          qr: data.qrCodeImage,
+          semester: false,
+        });
       } else {
         await reservationService.createRecurringReservation({
           roomId: confirmRoom.id,
@@ -130,7 +151,16 @@ export default function LecturerDashboard() {
           blockCount,
         });
         setConfirmRoom(null);
-        setSemesterData({ title: "", weekDay: "", startDate: "", endDate: "" });
+        setSemesterData({
+          title: "",
+          weekDay: "",
+          startDate: "",
+          endDate: "",
+        });
+
+        setSelectedRoom(null);
+        setAvailableSlots([]);
+        setSelectedBlocks([]);
         setSuccessData({ qr: null, semester: true });
       }
     } catch (err) {
@@ -282,7 +312,20 @@ export default function LecturerDashboard() {
         slots={availableSlots}
         selectedBlocks={selectedBlocks}
         setSelectedBlocks={setSelectedBlocks}
-        onClose={() => setShowTimeModal(false)}
+        onClose={() => {
+          setShowTimeModal(false);
+
+          setSemesterData({
+            title: "",
+            weekDay: "",
+            startDate: "",
+            endDate: "",
+          });
+
+          setSelectedRoom(null);
+          setAvailableSlots([]);
+          setSelectedBlocks([]);
+        }}
         onContinue={(blocks) => {
           setShowTimeModal(false);
           setConfirmRoom({ ...selectedRoom, selectedBlocks: blocks });
@@ -294,7 +337,7 @@ export default function LecturerDashboard() {
         data={semesterData}
         setData={setSemesterData}
         maxDate={filterData?.maxDate}
-        onClose={() => setSemesterModal(false)}
+        onClose={handleCloseSemesterModal}
         onContinue={() => {
           if (
             !semesterData.title ||
@@ -332,6 +375,7 @@ export default function LecturerDashboard() {
         onClose={() => {
           setConfirmRoom(null);
           setBookingError("");
+          setSelectedBlocks([]);
         }}
         onConfirm={handleBook}
       />
