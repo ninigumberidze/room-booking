@@ -22,6 +22,7 @@ export default function AdminProfile() {
           birthDate={user?.dateOfBirth}
           status={user?.userType}
           gender={user?.gender}
+          color={"#5D9028"}
         />
         <ContactCard email={user?.email} phone={user?.phoneNumber} />
       </div>

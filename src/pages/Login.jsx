@@ -104,20 +104,20 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <div className="w-full md:w-768 lg:w-960 bg-white p-6 sm:p-8 md:p-10 lg:p-12 rounded-xl border-2 border-[#1A71B7]">
-        <h2 className="text-3xl font-bold text-center mb-8 text-[#1A71B7]">
+      <div className="w-full max-w-xl bg-white rounded-2xl border-2 border-[#1A71B7] shadow-lg p-5 sm:p-8 md:p-10">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 text-[#1A71B7]">
           სისტემაში შესვლა
         </h2>
 
         {error && (
-          <div className="bg-red-100 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
+          <div className="bg-red-100 text-red-600 text-sm sm:text-base p-3 rounded-lg mb-5 text-center">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5 mb-6">
           <div className="text-left">
-            <label className=" text-sm  font-medium text-gray-400">
+            <label className="block text-sm sm:text-base font-medium text-gray-400">
               მომხმარებელი
             </label>
             <input
@@ -127,12 +127,14 @@ export default function Login() {
               autoComplete="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
+              className="w-full mt-1 p-3 h-12 sm:h-14 text-sm sm:text-base border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
             />
           </div>
 
           <div className="text-left">
-            <label className="text-sm font-medium text-gray-400">პაროლი</label>
+            <label className="block text-sm sm:text-base font-medium text-gray-400">
+              პაროლი
+            </label>
 
             <div className="relative">
               <input

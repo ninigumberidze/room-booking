@@ -8,14 +8,21 @@ export default function ProfileInfoCard({
   status,
   gender,
   extraFields = [],
+  color,
 }) {
   return (
     <div className="flex gap-8 mb-6">
-      <div className="border-2 border-[#1A71B7] rounded-lg p-10 bg-white flex items-center justify-center">
+      <div
+        className="border-2  rounded-lg p-10 bg-white flex items-center justify-center"
+        style={{ borderColor: color }}
+      >
         {gender?.toLowerCase() === "female" ? <FemaleIcon /> : <MaleIcon />}
       </div>
 
-      <div className="text-left border-2 border-[#1A71B7] rounded-lg bg-white flex-1 p-6">
+      <div
+        className="text-left border-2  rounded-lg bg-white flex-1 p-6"
+        style={{ borderColor: color }}
+      >
         <div className="space-y-4 text-lg">
           <p>
             <span className="font-bold">სახელი:</span> {firstName}

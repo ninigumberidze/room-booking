@@ -163,7 +163,7 @@ export default function Register() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6  pb-6">
-            <div className="grid grid-cols-2 gap-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               <input
                 name="firstName"
                 placeholder="სახელი"
@@ -179,7 +179,7 @@ export default function Register() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 ">
               <input
                 type="date"
                 name="birthDate"
@@ -195,12 +195,11 @@ export default function Register() {
               </select>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 ">
               <select name="faculty" onChange={handleChange} className="input">
                 <option value="">სტატუსი</option>
                 <option>სტუდენტი</option>
                 <option>ლექტორი</option>
-                {/* <option>ადმინისტრატორი</option> */}
               </select>
 
               <input
@@ -211,7 +210,7 @@ export default function Register() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               <input
                 name="email"
                 placeholder="ელ-ფოსტა"

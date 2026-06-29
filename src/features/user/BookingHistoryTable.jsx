@@ -8,6 +8,7 @@ export default function BookingHistoryTable({
   onSelectBooking,
   onCancelBooking,
   showType = false,
+  color,
 }) {
   return (
     <div className="p-8">
@@ -88,7 +89,7 @@ export default function BookingHistoryTable({
         currentPage={currentPage}
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
-        color="#1A71B7"
+        color={color}
       />
     </div>
   );

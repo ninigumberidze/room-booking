@@ -67,6 +67,7 @@ export default function LecturerProfile() {
       <ProfileHeader
         userName={`${user?.firstName || ""} ${user?.lastName || ""}`}
         onProfileClick={() => navigate("/lecturer-dashboard")}
+        color="#1A71B7"
       />
       <div className="flex flex-1 ">
         <LecturerSidebar activeNav="profile" />
@@ -77,9 +78,14 @@ export default function LecturerProfile() {
             birthDate={user?.dateOfBirth}
             status={user?.userType}
             gender={user?.gender}
+            color="#1A71B7"
           />
 
-          <ContactCard email={user?.email} phone={user?.phoneNumber} />
+          <ContactCard
+            email={user?.email}
+            phone={user?.phoneNumber}
+            color="#1A71B7"
+          />
 
           <div className="border-2 border-[#1A71B7] rounded-lg bg-white p-6 flex justify-between items-center">
             <div className="flex items-center gap-2 text-[#1A71B7] font-medium">
@@ -126,6 +132,7 @@ export default function LecturerProfile() {
                 onSelectBooking={handleShowQR}
                 onCancelBooking={handleCancelClick}
                 showType={true}
+                color="#1A71B7"
               />
             </div>
           </div>
