@@ -14,19 +14,19 @@ export default function AuthLayout({ children }) {
         }}
       />
 
-      <div className="w-full md:w-1/2 flex items-center justify-center px-4 sm:px-6 md:px-8 py-8">
+      <div className="w-full md:w-1/2 flex items-center justify-center ">
         <div className="w-full max-w-xl">
           <div
             onClick={() => navigate("/")}
-            className="flex items-center gap-3 sm:gap-3 mb-8 md:mb-12 cursor-pointer"
+            className="flex items-center gap-3 sm:gap-4   mb-8 md:mb-12 cursor-pointer"
           >
             <img
               src={logo}
               alt="Logo"
-              className="w-14 sm:w-16 md:w-20 h-auto flex-shrink-0"
+              className="w-14 sm:w-16 md:w-20 h-auto shrink-0"
             />
 
-            <p className="text-base sm:text-lg md:text-xl font-semibold text-[#1A71B7] leading-tight">
+            <p className="text-left sm:text-lg md:text-xl font-semibold text-[#1A71B7] leading-tight">
               ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი
             </p>
           </div>

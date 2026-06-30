@@ -39,43 +39,33 @@ export default function StudentProfile() {
   );
   const handleConfirmCancel = async () => {
     try {
-      console.log("CANCELLING:", reservationToCancel);
-
       const { data } = await reservationService.deleteReservation(
         reservationToCancel.id,
       );
-
-      console.log("DELETE RESPONSE:", data);
 
       await loadReservations();
 
       setReservationToCancel(null);
     } catch (error) {
-      console.error("CANCEL ERROR:", error);
-
-      console.log("STATUS:", error.response?.status);
-      console.log("DATA:", error.response?.data);
+      console.error("cancel error:", error);
     }
   };
   useEffect(() => {
     loadReservations();
   }, []);
   const handleShowQR = (booking) => {
-    console.log("QR:", booking.qrCodeBase64);
     setSelectedQR(booking.qrCodeBase64);
   };
   const loadReservations = async () => {
     try {
       const { data } = await reservationService.getMyReservations();
 
-      console.log("MY RESERVATIONS:", data);
-
       setBookings(data.reservations);
     } catch (error) {
       console.error(error);
     }
   };
-  console.log("BOOKING:", bookings[0]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <ProfileHeader

@@ -70,9 +70,6 @@ export default function AppRoutes() {
         }
       />
 
-      {/* <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      <Route path="/admin-profile" element={<AdminProfile />} /> */}
-
       <Route
         path="/lecturer-dashboard"
         element={

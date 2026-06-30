@@ -108,7 +108,7 @@ export default function AdminDashboard() {
         color="#5D9028"
       />
 
-      <div className="p-6 ">
+      <div className="p-4 sm:p-6 ">
         <AdminSearchPanel
           filters={filters}
           onChange={handleChange}
@@ -138,77 +138,79 @@ export default function AdminDashboard() {
             </div>
           ) : (
             <>
-              <table className="w-full text-left">
-                <thead className="bg-[#5D9028] text-white">
-                  <tr>
-                    <th className="p-3">მომხმარებელი</th>
-                    <th className="p-3">ტიპი</th>
-                    <th className="p-3">ოთახი</th>
-                    <th className="p-3">თარიღი</th>
-                    <th className="p-3">დრო</th>
-                    <th className="p-3">სტატუსი</th>
-                    <th className="p-3">გაუქმება</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentItems.map((r) => (
-                    <tr key={r.id} className="border-t hover:bg-gray-50">
-                      <td className="p-3">
-                        <div className="font-medium text-sm">
-                          {r.userFirstName} {r.userLastName}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          {r.userEmail}
-                        </div>
-                      </td>
-                      <td className="p-3 text-sm">
-                        {USER_TYPE_LABEL[r.userType] ?? r.userType}
-                      </td>
-                      <td className="p-3 text-sm">
-                        <div>
-                          {r.roomNumber} - {r.roomName}
-                        </div>
-                        <div className="text-xs text-gray-400">
-                          {r.buildingName}
-                        </div>
-                      </td>
-                      <td className="p-3 text-sm">{r.date}</td>
-                      <td className="p-3 text-sm">
-                        {r.startsAt} - {r.endsAt}
-                      </td>
-                      <td className="p-3">
-                        <span
-                          className={`px-3 py-1 rounded text-sm text-white  ${
-                            r.status === "Active"
-                              ? "bg-green-500"
-                              : "bg-gray-300 cursor-not-allowed"
-                          }`}
-                        >
-                          {r.status === "Active" ? "აქტიური" : "გაუქმებული"}
-                        </span>
-                        {r.isRecurring && (
-                          <span className="ml-1 px-2 py-1 rounded text-xs bg-blue-100 text-blue-700">
-                            სემ
-                          </span>
-                        )}
-                      </td>
-                      <td className="p-3">
-                        <button
-                          disabled={!r.canCancel}
-                          onClick={() => setCancelTarget(r)}
-                          className={`px-3 py-1 rounded text-sm text-white ${
-                            r.canCancel
-                              ? "bg-red-500 hover:bg-red-600"
-                              : "bg-gray-300 cursor-not-allowed"
-                          }`}
-                        >
-                          გაუქმება
-                        </button>
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="min-w-[900px] w-full text-left">
+                  <thead className="bg-[#5D9028] text-white">
+                    <tr>
+                      <th className="p-3">მომხმარებელი</th>
+                      <th className="p-3">ტიპი</th>
+                      <th className="p-3">ოთახი</th>
+                      <th className="p-3">თარიღი</th>
+                      <th className="p-3">დრო</th>
+                      <th className="p-3">სტატუსი</th>
+                      <th className="p-3">გაუქმება</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {currentItems.map((r) => (
+                      <tr key={r.id} className="border-t hover:bg-gray-50">
+                        <td className="p-3">
+                          <div className="font-medium text-sm">
+                            {r.userFirstName} {r.userLastName}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            {r.userEmail}
+                          </div>
+                        </td>
+                        <td className="p-3 text-sm">
+                          {USER_TYPE_LABEL[r.userType] ?? r.userType}
+                        </td>
+                        <td className="p-3 text-sm">
+                          <div>
+                            {r.roomNumber} - {r.roomName}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            {r.buildingName}
+                          </div>
+                        </td>
+                        <td className="p-3 text-sm">{r.date}</td>
+                        <td className="p-3 text-sm">
+                          {r.startsAt} - {r.endsAt}
+                        </td>
+                        <td className="p-3">
+                          <span
+                            className={`px-3 py-1 rounded text-sm text-white  ${
+                              r.status === "Active"
+                                ? "bg-green-500"
+                                : "bg-gray-300 cursor-not-allowed"
+                            }`}
+                          >
+                            {r.status === "Active" ? "აქტიური" : "გაუქმებული"}
+                          </span>
+                          {r.isRecurring && (
+                            <span className="ml-1 px-2 py-1 rounded text-xs bg-blue-100 text-blue-700">
+                              სემ
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-3">
+                          <button
+                            disabled={!r.canCancel}
+                            onClick={() => setCancelTarget(r)}
+                            className={`px-3 py-1 rounded text-sm text-white ${
+                              r.canCancel
+                                ? "bg-red-500 hover:bg-red-600"
+                                : "bg-gray-300 cursor-not-allowed"
+                            }`}
+                          >
+                            გაუქმება
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -222,18 +224,20 @@ export default function AdminDashboard() {
 
       {cancelTarget && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-[450px]">
-            <h3 className="text-lg font-semibold mb-3">ჯავშნის გაუქმება</h3>
+          <div className="bg-white rounded-xl p-6 w-[95%] max-w-md">
+            <h3 className="text-lg text-black font-semibold mb-3">
+              ჯავშნის გაუქმება
+            </h3>
             <p className="text-gray-600 mb-2 text-sm">
-              {cancelTarget.userFirstName} {cancelTarget.userLastName} —{" "}
+              {cancelTarget.userFirstName} {cancelTarget.userLastName}{" "}
               {cancelTarget.roomNumber} ოთახი, {cancelTarget.date}
             </p>
             {cancelTarget.isRecurring && (
-              <p className="text-orange-600 text-sm mb-4">
-                ეს სემესტრული ჯავშანია — გაუქმდება მთელი სერია.
+              <p className="text-red-600 text-sm mb-4">
+                სემესტრული ჯავშნის გაუქმება გააუქმებს მთელს სერიას
               </p>
             )}
-            <div className="flex justify-between gap-3 mt-4">
+            <div className="flex justify-between gap-3 flex-col sm:flex-row  mt-4">
               <button
                 onClick={() => setCancelTarget(null)}
                 className="border border-gray-300 px-4 py-2 rounded-lg text-sm"

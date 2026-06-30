@@ -6,10 +6,11 @@ import { useEffect } from "react";
 import OTPModal from "../shared/components/OTPModal";
 import AuthLayout from "../components/Layout/AuthLayout";
 import { authService } from "../services/authService";
+import SuccessModal from "../shared/components/SuccessModal";
+import TermsModal from "../shared/components/TermsModal";
 
 export default function Register() {
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -24,31 +25,23 @@ export default function Register() {
   });
   const [resendTimer, setResendTimer] = useState(60);
   const [verificationToken, setVerificationToken] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [showOtpModal, setShowOtpModal] = useState(false);
-
   const [otp, setOtp] = useState(["", "", "", ""]);
-
   const [otpError, setOtpError] = useState("");
-
   const maxBirthDate = new Date();
   maxBirthDate.setFullYear(maxBirthDate.getFullYear() - 17);
-
   const maxDate = maxBirthDate.toISOString().split("T")[0];
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     setForm({
       ...form,
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
   useEffect(() => {
     if (!showOtpModal) return;
 
@@ -60,7 +53,6 @@ export default function Register() {
 
     return () => clearInterval(timer);
   }, [showOtpModal, resendTimer]);
-
   const validate = () => {
     if (
       !form.firstName ||
@@ -74,33 +66,25 @@ export default function Register() {
     ) {
       return "გთხოვთ შეავსოთ ყველა ველი";
     }
-
     if (!/\S+@\S+\.\S+/.test(form.email)) {
       return "ელ-ფოსტის ფორმატი არასწორია";
     }
-
     if (form.password.length < 6) {
       return "პაროლი უნდა იყოს მინიმუმ 6 სიმბოლო";
     }
-
     if (!form.agree) {
       return "გთხოვთ დაეთანხმოთ მომსახურების პირობებს";
     }
-
     return null;
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
     const validationError = validate();
-
     if (validationError) {
       setError(validationError);
       return;
     }
-
     try {
       const payload = {
         firstName: form.firstName,
@@ -114,45 +98,47 @@ export default function Register() {
         password: form.password,
         reenteredPassword: form.password,
       };
-      console.log(payload);
+
       const { data } = await authService.register(payload);
-      console.log("register data:", data);
+
       setVerificationToken(data.verificationToken);
       setResendTimer(data.resendCooldownSeconds);
-
       setShowOtpModal(true);
     } catch (err) {
-      console.log("error:", err);
-      console.log("backend response:", err.response?.data);
-
       setError(err.response?.data?.detail || "რეგისტრაცია ვერ შესრულდა");
     }
   };
-
   const handleOtpVerify = async () => {
     try {
       const enteredCode = otp.join("");
-
       const { data } = await authService.verifyEmailOtp({
         verificationToken,
         otp: enteredCode,
       });
-
-      if (data.status === 1) {
-        setShowOtpModal(false);
-        setShowSuccessModal(true);
+      switch (data.status) {
+        case 1:
+          setOtpError("");
+          setShowOtpModal(false);
+          setShowSuccessModal(true);
+          break;
+        case 2:
+          setOtpError("OTP კოდი არასწორია");
+          break;
+        case 3:
+          setOtpError("OTP კოდის ვადა ამოიწურა");
+          break;
+        default:
+          setOtpError("OTP კოდი არასწორია");
       }
     } catch (err) {
-      console.log("error:", err);
-      setOtpError("კოდი არასწორია");
+      setOtpError(err.response?.data?.detail || "OTP კოდი არასწორია");
     }
   };
-
   return (
     <AuthLayout>
       <div className="w-full flex items-center justify-center ">
         <div className="w-full bg-white p-8 rounded-2xl shadow-lg border-2 border-[#5D9028]">
-          <h2 className="text-2xl text-center text-[#5D9028] mb-6">
+          <h2 className="text-3xl text-center text-[#5D9028] mb-6">
             რეგისტრაცია
           </h2>
 
@@ -170,7 +156,6 @@ export default function Register() {
                 onChange={handleChange}
                 className="input pl-12"
               />
-
               <input
                 name="lastName"
                 placeholder="გვარი"
@@ -187,7 +172,6 @@ export default function Register() {
                 className="input"
                 max={maxDate}
               />
-
               <select name="gender" onChange={handleChange} className="input">
                 <option value="">სქესი</option>
                 <option value="male">მამრობითი</option>
@@ -201,7 +185,6 @@ export default function Register() {
                 <option>სტუდენტი</option>
                 <option>ლექტორი</option>
               </select>
-
               <input
                 name="phone"
                 placeholder="ტელეფონი"
@@ -226,7 +209,6 @@ export default function Register() {
                   onChange={handleChange}
                   className="input pr-10"
                 />
-
                 <span
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-4 cursor-pointer text-gray-500"
@@ -257,7 +239,6 @@ export default function Register() {
                 Conditions) და მონაცემთა დაცვის პოლიტიკას (Privacy Policy).
               </button>
             </label>
-
             <button
               type="submit"
               className="w-full bg-[#5D9028]  text-white p-3  rounded-lg hover:bg-green-800"
@@ -268,72 +249,19 @@ export default function Register() {
         </div>
       </div>
 
-      {showTerms && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl w-[700px] max-h-[80vh] overflow-hidden">
-            <div className="flex justify-between items-center border-b p-5">
-              <h2 className="text-2xl font-bold text-green-700">
-                მომსახურების პირობები
-              </h2>
-            </div>
+      <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
 
-            <div className="p-6 overflow-y-auto max-h-[60vh] text-sm leading-7 text-gray-700">
-              <p className="mb-5 text-left">
-                უნივერსიტეტის აუდიტორიების დაჯავშნის სისტემის გამოყენებით,
-                მომხმარებელი ეთანხმება მომსახურების პირობებს.
-              </p>
+      <SuccessModal
+        open={showSuccessModal}
+        title="რეგისტრაცია წარმატებით დასრულდა"
+        description="თქვენი ანგარიში წარმატებით გააქტიურდა."
+        buttonText="სისტემაში შესვლა"
+        onClose={() => {
+          setShowSuccessModal(false);
+          navigate("/");
+        }}
+      />
 
-              <p className="mb-5 text-left">
-                მომხმარებელი პასუხისმგებელია თავისი ანგარიშის უსაფრთხოებაზე და
-                ვალდებულია არ გადასცეს ავტორიზაციის მონაცემები სხვა პირს.
-              </p>
-
-              <p className="mb-5 text-left">
-                მომხმარებლის პერსონალური მონაცემები დაცულია უნივერსიტეტის
-                პოლიტიკის შესაბამისად.
-              </p>
-
-              <p className="mb-5 text-left">
-                სისტემაში რეგისტრაციით, თქვენ ადასტურებთ, რომ გაეცანით და
-                ეთანხმებით ყველა პირობას.
-              </p>
-            </div>
-
-            <div className="border-t p-5 flex justify-end">
-              <button
-                onClick={() => setShowTerms(false)}
-                className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
-              >
-                დახურვა
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showSuccessModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 w-[600px] text-center">
-            <h2 className="text-2xl font-bold text-[#5D9028] mb-4">
-              რეგისტრაცია წარმატებით დასრულდა
-            </h2>
-
-            <p className="text-gray-600 mb-8">
-              თქვენი ანგარიში წარმატებით გააქტიურდა.
-            </p>
-
-            <button
-              onClick={() => {
-                setShowSuccessModal(false);
-                navigate("/");
-              }}
-              className="bg-[#5D9028] text-white px-8 py-3 rounded-lg hover:bg-green-700"
-            >
-              სისტემაში შესვლა
-            </button>
-          </div>
-        </div>
-      )}
       <OTPModal
         open={showOtpModal}
         otp={otp}
@@ -342,20 +270,18 @@ export default function Register() {
         error={otpError}
         resendTimer={resendTimer}
         onConfirm={handleOtpVerify}
+        setError={setOtpError}
         onResend={async () => {
           try {
             await authService.resendEmailOtp;
             const { data } = await authService.resendEmailOtp({
               verificationToken,
             });
-            console.log("RESEND RESPONSE:", data);
+
             setOtp(["", "", "", ""]);
             setOtpError("");
-
             setResendTimer(data.retryAfterSeconds || 60);
-          } catch (err) {
-            console.log(err);
-          }
+          } catch (err) {}
         }}
       />
     </AuthLayout>

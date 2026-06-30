@@ -20,7 +20,7 @@ export default function SuccessQRModal({
           <div
             className={`text-center ${qr ? "w-1/2 border-r pr-4" : "w-full"}`}
           >
-            <h3 className="font-semibold text-lg">{title}</h3>
+            <h3 className="font-semibold text-black text-lg">{title}</h3>
             <p className="text-sm text-gray-500 mt-2">{description}</p>
           </div>
 

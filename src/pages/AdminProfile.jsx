@@ -15,7 +15,7 @@ export default function AdminProfile() {
         userName={`${user?.firstName || ""} ${user?.lastName || ""}`}
         onProfileClick={() => navigate("/admin-dashboard")}
       />
-      <div className="max-w-6xl mx-auto p-8">
+      <div className="max-w-6xl mx-auto px-4 py-6 sm:px-6 md:px-8">
         <ProfileInfoCard
           firstName={user?.firstName}
           lastName={user?.lastName}

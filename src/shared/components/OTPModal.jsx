@@ -2,26 +2,35 @@ export default function OTPModal({
   open,
   otp,
   setOtp,
-  error,
+
   onConfirm,
   onResend,
   resendTimer,
   onClose,
+  error,
+  setError,
   title = "კოდის შეყვანა",
   description = "გთხოვთ შეიყვანეთ ელ-ფოსტაზე გამოგზავნილი ერთჯერადი კოდი",
 }) {
   if (!open) return null;
 
   const handleChange = (value, index) => {
-    if (!/^\d*$/.test(value)) return;
+    if (!/^\d?$/.test(value)) return;
+
+    if (error) {
+      setError("");
+    }
 
     const newOtp = [...otp];
     newOtp[index] = value;
-
     setOtp(newOtp);
 
     if (value && index < otp.length - 1) {
       document.getElementById(`otp-${index + 1}`)?.focus();
+    }
+
+    if (!value && index > 0) {
+      document.getElementById(`otp-${index - 1}`)?.focus();
     }
   };
 
@@ -32,15 +41,17 @@ export default function OTPModal({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl p-8 w-[600px]"
+        className="bg-white rounded-2xl w-[95%] max-w-[600px] p-5 sm:p-6 md:p-8 shadow-xl"
       >
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-green-700 text-center mb-3">
           {title}
         </h2>
 
-        <p className="text-gray-600 mb-8 text-center">{description}</p>
+        <p className="text-gray-600 text-sm sm:text-base text-center mb-6">
+          {description}
+        </p>
 
-        <div className="flex justify-center gap-4 mb-4">
+        <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-4 mb-3">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -48,16 +59,21 @@ export default function OTPModal({
               maxLength={1}
               value={digit}
               onChange={(e) => handleChange(e.target.value, index)}
-              className={`w-14 h-14 border text-center text-xl rounded-lg ${
-                error ? "border-red-500" : "border-[#5D9028]"
-              }`}
+              className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-lg sm:text-xl font-semibold text-center rounded-lg border-2 transition focus:outline-none
+                focus:ring-2 ${error ? "border-red-500 focus:ring-red-300" : "border-[#5D9028] focus:ring-green-300"}`}
             />
           ))}
         </div>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {error && (
+          <div className="mb-5 rounded-lg bg-red-50 border border-red-300 px-4 py-3">
+            <p className="text-sm text-red-600 text-center font-medium">
+              {error}
+            </p>
+          </div>
+        )}
 
-        <div className="flex justify-between items-center mt-6">
+        <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center mt-6">
           <button
             disabled={resendTimer > 0}
             onClick={onResend}

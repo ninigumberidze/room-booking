@@ -50,10 +50,7 @@ export default function Login() {
       setError(validationError);
       return;
     }
-    // console.log({
-    //   email: form.email,
-    //   password: form.password,
-    // });
+
     try {
       setLoading(true);
 
@@ -93,9 +90,6 @@ export default function Login() {
           setError("დაფიქსირდა შეცდომა");
       }
     } catch (err) {
-      console.log("error:", err);
-      console.log("error response:", err?.response);
-      console.log("error data:", err?.response?.data);
       setError("ავტორიზაცია ვერ შესრულდა");
     } finally {
       setLoading(false);

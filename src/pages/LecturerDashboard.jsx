@@ -16,7 +16,6 @@ import RoomCard from "../features/booking/RoomCard";
 export default function LecturerDashboard() {
   const navigate = useNavigate();
   const user = useUser();
-
   const [bookingError, setBookingError] = useState("");
   const [filterData, setFilterData] = useState(null);
   const [filters, setFilters] = useState({
@@ -33,7 +32,6 @@ export default function LecturerDashboard() {
     (currentPage - 1) * roomsPerPage,
     currentPage * roomsPerPage,
   );
-
   const [isBooking, setIsBooking] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [availableSlots, setAvailableSlots] = useState([]);
@@ -48,14 +46,12 @@ export default function LecturerDashboard() {
     endDate: "",
   });
   const [successData, setSuccessData] = useState(null);
-
   useEffect(() => {
     reservationService
       .getFilters()
       .then(({ data }) => setFilterData(data))
       .catch(console.error);
   }, []);
-
   const handleCloseSemesterModal = () => {
     setSemesterData({
       title: "",
@@ -63,16 +59,13 @@ export default function LecturerDashboard() {
       startDate: "",
       endDate: "",
     });
-
     setSemesterModal(false);
-
     setSelectedRoom(null);
     setAvailableSlots([]);
     setSelectedBlocks([]);
   };
   const handleChange = (e) =>
     setFilters({ ...filters, [e.target.name]: e.target.value });
-
   const handleSearch = async () => {
     try {
       const { data } = await reservationService.getRooms({
@@ -87,7 +80,6 @@ export default function LecturerDashboard() {
       console.error(err);
     }
   };
-
   const handleClear = () => {
     setFilters({
       bookingType: "single",
@@ -98,7 +90,6 @@ export default function LecturerDashboard() {
     setResults([]);
     setCurrentPage(1);
   };
-
   const handleOpenBooking = async (room) => {
     if (!room.hasAvailability) return;
     try {
@@ -116,7 +107,6 @@ export default function LecturerDashboard() {
       console.error(err);
     }
   };
-
   const handleBook = async () => {
     if (isBooking) return;
     setIsBooking(true);

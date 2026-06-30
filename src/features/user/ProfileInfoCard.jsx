@@ -11,19 +11,19 @@ export default function ProfileInfoCard({
   color,
 }) {
   return (
-    <div className="flex gap-8 mb-6">
+    <div className="flex flex-col md:flex-row gap-6 mb-6">
       <div
-        className="border-2  rounded-lg p-10 bg-white flex items-center justify-center"
+        className=" border-2 rounded-xl bg-white flex items-center justify-center p-6 sm:p-8 md:p-10 self-center md:self-auto "
         style={{ borderColor: color }}
       >
         {gender?.toLowerCase() === "female" ? <FemaleIcon /> : <MaleIcon />}
       </div>
 
       <div
-        className="text-left border-2  rounded-lg bg-white flex-1 p-6"
+        className="text-left flex-1 border-2 rounded-xl  rounded-lg bg-white flex-1 sm:p-6 p-5"
         style={{ borderColor: color }}
       >
-        <div className="space-y-4 text-lg">
+        <div className="space-y-3 text-sm sm:text-base md:text-lg">
           <p>
             <span className="font-bold">სახელი:</span> {firstName}
           </p>

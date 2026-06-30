@@ -55,7 +55,7 @@ export default function StudentDashboard() {
       setSelectedRoomForTime(room);
       setSelectedSlots([]);
     } catch (error) {
-      console.log(error);
+      
     }
   };
 
@@ -71,7 +71,7 @@ export default function StudentDashboard() {
       const { data } = await reservationService.getRooms(params);
       setResults(data.rooms || []);
     } catch (error) {
-      console.log(error);
+     
     }
   };
 
@@ -108,7 +108,7 @@ export default function StudentDashboard() {
       const { data } = await reservationService.getFilters();
       setReservationFilters(data);
     } catch (error) {
-      console.log(error);
+      
     } finally {
       setLoadingFilters(false);
     }

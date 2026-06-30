@@ -11,23 +11,16 @@ import { authService } from "../services/authService";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
-
   const [step, setStep] = useState(1);
   const [resetToken, setResetToken] = useState("");
   const [resendTimer, setResendTimer] = useState(60);
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
-
   const [password, setPassword] = useState("");
-
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [error, setError] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   useEffect(() => {
     if (step !== 2 || resendTimer <= 0) return;
 
@@ -51,17 +44,11 @@ export default function ForgotPassword() {
         email,
       });
 
-      console.log("FORGOT PASSWORD:", data);
-
       setResetToken(data.resetToken);
       setResendTimer(data.resendCooldownSeconds || 60);
 
       setStep(2);
     } catch (err) {
-      console.log("FULL ERROR:", err);
-      console.log("BACKEND RESPONSE:", err.response?.data);
-      console.log("VALIDATION ERRORS:", err.response?.data?.errors);
-      console.log(err.response?.data?.errors?.Email);
       if (err.response?.data?.detail) {
         setError(err.response.data.detail);
       } else {
@@ -226,7 +213,6 @@ export default function ForgotPassword() {
               <button
                 disabled={resendTimer > 0}
                 onClick={async () => {
-                  console.log("RESET TOKEN:", resetToken);
                   try {
                     const { data } = await authService.resendPasswordResetOtp({
                       resetToken,
@@ -305,87 +291,6 @@ export default function ForgotPassword() {
             </button>
           </>
         )}
-
-        {/* {step === 3 && (
-          <>
-            <label className="block text-gray-500 mb-2 text-left">პაროლი</label>
-
-            <div className="relative mb-6">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border-2 border-[#1A71B7] rounded-lg p-4 pr-14 focus:outline-none"
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-4"
-              >
-                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
-            </div>
-
-            <label className="block text-gray-500 mb-2 text-left">
-              გაიმეორეთ პაროლი
-            </label>
-
-            <div className="relative mb-8">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full border-2 border-[#1A71B7] rounded-lg p-4 pr-14 focus:outline-none"
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-4"
-              >
-                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
-            </div>
-
-            <button
-              onClick={handlePasswordSubmit}
-              className="w-full bg-[#1A71B7] hover:bg-blue-700 transition text-white rounded-lg py-4 text-lg font-medium mb-8"
-            >
-              დადასტურება
-            </button>
-
-            <div className="text-sm leading-7">
-              <p className="mb-3 text-left">
-                თქვენი ანგარიშის უსაფრთხოების უზრუნველსაყოფად, პაროლი უნდა
-                აკმაყოფილებდეს შემდეგ მოთხოვნებს:
-              </p>
-
-              <ul className="list-disc ml-6 text-left ">
-                <li>მინიმუმ 8 სიმბოლო</li>
-
-                <li>ერთი დიდი ასო</li>
-
-                <li>ერთი პატარა ასო</li>
-
-                <li>ერთი ციფრი</li>
-
-                <li>სპეციალური სიმბოლო</li>
-              </ul>
-            </div>
-          </>
-        )} */}
-
-        {/* {step === 4 && (
-          <div className="text-center py-10">
-            <h2 className="text-2xl font-bold text-green-700 mb-2">
-              პაროლი წარმატებით განახლდა
-            </h2>
-
-            <p className="text-gray-500">გადამისამართება ავტორიზაციაზე...</p>
-          </div>
-        )} */}
-
         {step === 3 && (
           <div className="text-center py-10">
             <h2 className="text-2xl font-semibold text-green-700 mb-2">

@@ -9,7 +9,7 @@ export default function Dashboard() {
   if (!user) {
     return <div>იტვირთება...</div>;
   }
-  console.log(user);
+  
   switch (user.userType) {
     case "Student":
       return <StudentDashboard />;

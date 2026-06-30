@@ -5,7 +5,7 @@ export default function Pagination({
   color = "#F37A21",
 }) {
   return (
-    <div className="flex justify-center items-center gap-4 p-4 text-sm">
+    <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 p-4 text-sm">
       <button
         disabled={currentPage === 1}
         onClick={() => setCurrentPage((prev) => prev - 1)}
@@ -22,7 +22,7 @@ export default function Pagination({
           <button
             key={index}
             onClick={() => setCurrentPage(index + 1)}
-            className={`w-7 h-7 rounded-full ${
+            className={`w-7 h-7 sm:w-9 sm:h-9 rounded-full ${
               currentPage === index + 1 ? "text-white" : "text-black"
             }`}
             style={{

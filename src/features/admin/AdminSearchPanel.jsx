@@ -13,15 +13,15 @@ export default function AdminSearchPanel({
         <h3 className="text-[#5D9028] font-medium">საძიებო პანელი</h3>
       </div>
 
-      <div className="flex flex-wrap gap-4 items-center mt-4 justify-between">
-        <div className="flex flex-wrap gap-4 items-center">
+      <div className="mt-6 flex flex-col xl:flex-row gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 flex-1">
           <div className="relative">
             <input
               name="search"
               placeholder="მეილი"
               value={filters.search}
               onChange={onChange}
-              className="border-2 border-[#5D9028] rounded-lg px-4 py-2 pr-10 w-64"
+              className="border-2 border-[#5D9028] rounded-lg px-4 py-2 pr-10 w-full"
             />
 
             <span className="absolute right-3 top-2.5 text-[#5D9028]">
@@ -33,7 +33,7 @@ export default function AdminSearchPanel({
             name="userType"
             value={filters.userType}
             onChange={onChange}
-            className="border-2 border-[#5D9028] rounded-lg px-4 py-2"
+            className=" w-full border-2 border-[#5D9028] rounded-lg px-4 py-2"
           >
             <option value="">მომხმარებლის ტიპი</option>
             <option value="0">სტუდენტი</option>
@@ -44,7 +44,7 @@ export default function AdminSearchPanel({
             name="status"
             value={filters.status}
             onChange={onChange}
-            className="border-2 border-[#5D9028] rounded-lg px-4 py-2"
+            className=" w-full border-2 border-[#5D9028] rounded-lg px-4 py-2"
           >
             <option value="">სტატუსი</option>
             <option value="Active">აქტიური</option>
@@ -55,7 +55,7 @@ export default function AdminSearchPanel({
             name="roomType"
             value={filters.roomType}
             onChange={onChange}
-            className="border-2 border-[#5D9028] rounded-lg px-4 py-2"
+            className="w-full border-2 border-[#5D9028] rounded-lg px-4 py-2"
           >
             <option value="">ოთახის ტიპი</option>
             <option value="1">სალექციო</option>
@@ -65,17 +65,17 @@ export default function AdminSearchPanel({
           </select>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4 xl:self-end">
           <button
             onClick={onSearch}
-            className="bg-[#5D9028] text-white px-5 py-2 rounded-lg hover:bg-green-700 transition"
+            className="w-full bg-[#5D9028] text-white w-full sm:w-auto px-6 py-2 rounded-lg hover:bg-green-700 transition"
           >
             ძებნა
           </button>
 
           <button
             onClick={onReset}
-            className="border-2 border-[#5D9028] text-[#5D9028] px-5 py-2 rounded-lg hover:bg-green-50 transition"
+            className=" w-full border-2 border-[#5D9028] text-[#5D9028] w-full sm:w-auto px-6 py-2 rounded-lg hover:bg-green-50 transition"
           >
             გასუფთავება
           </button>

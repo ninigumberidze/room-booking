@@ -1,6 +1,7 @@
 import PersonIcon from "../Icons/PersonIcon";
 import BookIcon from "../Icons/BookIcon";
 import { useNavigate } from "react-router-dom";
+import HelpIcon from "../Icons/HelpIcon";
 
 export default function StudentSidebar({
   activeNav,
@@ -50,7 +51,7 @@ export default function StudentSidebar({
 
       <div className="m-3 mb-12 bg-[#F4F6FA] rounded-xl p-3">
         <div className="flex items-center gap-2 mb-1.5">
-          <span className="text-lg">🎧</span>
+          <HelpIcon color="#5D9028" />
 
           <p className="text-md" style={{ color }}>
             დახმარება
