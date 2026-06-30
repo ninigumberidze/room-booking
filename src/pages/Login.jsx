@@ -98,95 +98,97 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <div className="w-full max-w-xl bg-white rounded-2xl border-2 border-[#1A71B7] shadow-lg p-5 sm:p-8 md:p-10">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 text-[#1A71B7]">
-          სისტემაში შესვლა
-        </h2>
+      <div className="flex justify-center">
+        <div className="w-[92%] justify-center max-w-xs sm:max-w-md md:max-w-xl bg-white rounded-2xl border-2 border-[#1A71B7] shadow-lg p-4 sm:p-6 md:p-10">
+          <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 text-[#1A71B7]">
+            სისტემაში შესვლა
+          </h2>
 
-        {error && (
-          <div className="bg-red-100 text-red-600 text-sm sm:text-base p-3 rounded-lg mb-5 text-center">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5 mb-6">
-          <div className="text-left">
-            <label className="block text-sm sm:text-base font-medium text-gray-400">
-              მომხმარებელი
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="example@mail.com"
-              autoComplete="email"
-              value={form.email}
-              onChange={handleChange}
-              className="w-full mt-1 p-3 h-12 sm:h-14 text-sm sm:text-base border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
-            />
-          </div>
-
-          <div className="text-left">
-            <label className="block text-sm sm:text-base font-medium text-gray-400">
-              პაროლი
-            </label>
-
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="••••••••"
-                autoComplete="current-password"
-                value={form.password}
-                onChange={handleChange}
-                className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7] pr-12"
-              />
-
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-5 text-sm text-gray-500"
-              >
-                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
+          {error && (
+            <div className="bg-red-100 text-red-600 text-sm sm:text-base p-3 rounded-lg mb-5 text-center">
+              {error}
             </div>
-          </div>
+          )}
 
-          <span className="">
-            <span
-              onClick={() => navigate("/forgot-password")}
-              className=" block w-full text-sm mb-6  text-[#1A71B7]  cursor-pointer hover:underline text-right"
-            >
-              დაგავიწყდა პაროლი?
+          <form onSubmit={handleSubmit} className="space-y-5 mb-6">
+            <div className="text-left">
+              <label className="block text-sm sm:text-base font-medium text-gray-400">
+                მომხმარებელი
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="example@mail.com"
+                autoComplete="email"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full mt-1 p-3 h-12 sm:h-14 text-sm sm:text-base border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7]"
+              />
+            </div>
+
+            <div className="text-left">
+              <label className="block text-sm sm:text-base font-medium text-gray-400">
+                პაროლი
+              </label>
+
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="w-full mt-1 p-3 border rounded-lg border border-[#1A71B7] focus:outline-none focus:ring-2 focus:ring-[#1A71B7] pr-12"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-5 text-sm text-gray-500"
+                >
+                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+            </div>
+
+            <span className="">
+              <span
+                onClick={() => navigate("/forgot-password")}
+                className=" block w-full text-sm mb-6  text-[#1A71B7]  cursor-pointer hover:underline text-right"
+              >
+                დაგავიწყდა პაროლი?
+              </span>
             </span>
-          </span>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full p-3 rounded-lg text-white font-medium transition 
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full p-3 rounded-lg text-white font-medium transition 
                 ${
                   loading
                     ? "bg-blue-400 cursor-not-allowed"
                     : "bg-blue-600 hover:bg-blue-700"
                 }`}
+            >
+              {loading ? "სისტემაში შესვლა..." : "ავტორიზაცია"}
+            </button>
+          </form>
+
+          <div className="mb-6 flex items-center gap-4 w-full">
+            <div className="flex-1 h-px bg-[#8BC34A]"></div>
+
+            <span className="text-black text-lg">ან</span>
+
+            <div className="flex-1 h-px bg-[#8BC34A]"></div>
+          </div>
+
+          <div
+            onClick={() => navigate("/register")}
+            className=" rounded-xl border border-green-600 text-green-600 cursor-pointer p-3 text-center"
           >
-            {loading ? "სისტემაში შესვლა..." : "ავტორიზაცია"}
-          </button>
-        </form>
-
-        <div className="mb-6 flex items-center gap-4 w-full">
-          <div className="flex-1 h-px bg-[#8BC34A]"></div>
-
-          <span className="text-black text-lg">ან</span>
-
-          <div className="flex-1 h-px bg-[#8BC34A]"></div>
-        </div>
-
-        <div
-          onClick={() => navigate("/register")}
-          className=" rounded-xl border border-green-600 text-green-600 cursor-pointer p-3 text-center"
-        >
-          გაიარეთ სისტემაში რეგისტრაცია
+            გაიარეთ სისტემაში რეგისტრაცია
+          </div>
         </div>
       </div>
     </AuthLayout>

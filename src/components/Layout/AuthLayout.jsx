@@ -6,7 +6,7 @@ export default function AuthLayout({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-white">
+    <div className="min-h-screen  justify-center flex flex-col md:flex-row bg-white">
       <div
         className="hidden md:block md:w-1/2 bg-cover bg-center"
         style={{
@@ -18,7 +18,7 @@ export default function AuthLayout({ children }) {
         <div className="w-full max-w-xl">
           <div
             onClick={() => navigate("/")}
-            className="flex items-center gap-3 sm:gap-4   mb-8 md:mb-12 cursor-pointer"
+            className="flex items-center gap-3 sm:gap-4  mb-8 md:mb-12 cursor-pointer px-4 sm:px-0"
           >
             <img
               src={logo}
@@ -26,7 +26,7 @@ export default function AuthLayout({ children }) {
               className="w-14 sm:w-16 md:w-20 h-auto shrink-0"
             />
 
-            <p className="text-left sm:text-lg md:text-xl font-semibold text-[#1A71B7] leading-tight">
+            <p className="text-left text-xs sm:text-lg md:text-xl font-semibold text-[#1A71B7] leading-tight">
               ივანე ჯავახიშვილის სახელობის თბილისის სახელმწიფო უნივერსიტეტი
             </p>
           </div>
