@@ -136,9 +136,9 @@ export default function Register() {
   };
   return (
     <AuthLayout>
-      <div className="w-full flex items-center justify-center ">
-        <div className="w-full bg-white p-8 rounded-2xl shadow-lg border-2 border-[#5D9028]">
-          <h2 className="text-3xl text-center text-[#5D9028] mb-6">
+      <div className="flex justify-center ">
+        <div className="w-[92%] justify-center max-w-xs sm:max-w-md md:max-w-xl bg-white rounded-2xl border-2 shadow-lg p-4 sm:p-6 md:p-10 border-[#5D9028]">
+          <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 text-[#5D9028]">
             რეგისტრაცია
           </h2>
 

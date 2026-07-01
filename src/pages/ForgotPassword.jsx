@@ -143,162 +143,167 @@ export default function ForgotPassword() {
 
   return (
     <AuthLayout>
-      <div className="w-full  bg-white p-6 rounded-xl border-2 border-[#1A71B7]">
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-600 p-3 rounded-lg text-sm mb-5">
-            {error}
-          </div>
-        )}
-
-        {step === 1 && (
-          <>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#1A71B7] text-center mb-10">
-              შექმენით პაროლი
-            </h1>
-            <label className="block text-left text-gray-500 mb-2">
-              ელ-ფოსტა
-            </label>
-
-            <div className="relative mb-8">
-              <input
-                type="email"
-                placeholder="შეიყვანეთ ელ-ფოსტა"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full  h-12 sm:h-14 border-2 border-blue-400 rounded-lg p-4 pr-14 focus:outline-none"
-              />
+      <div className="flex justify-center ">
+        <div className="w-[92%] justify-center max-w-xs sm:max-w-md md:max-w-xl bg-white rounded-2xl border-2 shadow-lg p-4 sm:p-6 md:p-10 border-[#1A71B7]">
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-600 p-3 rounded-lg text-sm mb-5">
+              {error}
             </div>
+          )}
 
-            <button
-              onClick={handleEmailSubmit}
-              className="w-full bg-[#1A71B7] hover:bg-blue-700 transition text-white rounded-lg py-3 text-lg font-medium mb-8"
-            >
-              გადამოწმება
-            </button>
+          {step === 1 && (
+            <>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#1A71B7] text-center mb-10">
+                შექმენით პაროლი
+              </h1>
+              <label className="block text-left text-gray-500 mb-2">
+                ელ-ფოსტა
+              </label>
 
-            <div className="flex flex-shrink-0 items-start gap-2  text-black">
-              <NoticeIcon height="30" width="30" />
-              <div className="flex  flex-col">
-                <p className="mb-6 text-left  text-gray-800 font-extrabold">
-                  იმ შემთხვევაში, თუ თქვენ ელ-ფოსტის მისამართი სწორად ჩაწერეთ
-                  სისტემაში, თქვენ მიიღებთ ინსტრუქციას პაროლის შეცვლის შესახებ.
-                </p>
-              </div>
-            </div>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <p className="text-sm text-center text-gray-500 text-left mb-6">
-              OTP კოდი გაიგზავნა თქვენს ელ-ფოსტაზე. გთხოვთ შეიყვანოთ მიღებული
-              კოდი.
-            </p>
-
-            <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-4 mb-4">
-              {otp.map((digit, index) => (
+              <div className="relative mb-8">
                 <input
-                  key={index}
-                  id={`otp-${index}`}
-                  type="text"
-                  maxLength="1"
-                  value={digit}
-                  onChange={(e) => handleOtpChange(e.target.value, index)}
-                  className="w-12 h-12  sm:w-14 sm:h-14  md:w-16 md:h-16  border-2 border-[#1A71B7]  rounded-lg  text-center   text-lg  sm:text-xl  md:text-2xl   focus:outline-none focus:ring-2   focus:ring-[#1A71B7]"
+                  type="email"
+                  placeholder="შეიყვანეთ ელ-ფოსტა"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full  h-12 sm:h-14 border-2 border-blue-400 rounded-lg p-4 pr-14 focus:outline-none"
                 />
-              ))}
-            </div>
+              </div>
 
-            <div className="flex justify-center items-center gap-3 text-sm text-gray-500 mb-6">
               <button
-                disabled={resendTimer > 0}
-                onClick={async () => {
-                  try {
-                    const { data } = await authService.resendPasswordResetOtp({
-                      resetToken,
-                    });
-                    setOtp(["", "", "", ""]);
-                    setError("");
-                    setResendTimer(data.resendCooldownSeconds || 60);
-                  } catch (err) {
-                    setError("კოდის ხელახლა გაგზავნა ვერ მოხერხდა");
-                  }
-                }}
-                className={`transition ${
-                  resendTimer > 0
-                    ? "opacity-40 cursor-not-allowed"
-                    : "hover:opacity-70 cursor-pointer"
-                }`}
+                onClick={handleEmailSubmit}
+                className="w-full bg-[#1A71B7] hover:bg-blue-700 transition text-white rounded-lg py-3 text-lg font-medium mb-8"
               >
-                <RetryIcon />
+                გადამოწმება
               </button>
-              <span>00:{resendTimer.toString().padStart(2, "0")}</span>
-            </div>
 
-            <label className="block text-gray-500 mb-2 text-left">
-              ახალი პაროლი
-            </label>
-            <div className="relative mb-6">
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full h-12 sm:h-14 border-2 border-[#1A71B7] rounded-lg p-4 pr-14 focus:outline-none"
-              />
+              <div className="flex flex-shrink-0 items-start gap-2  text-black">
+                <NoticeIcon height="30" width="30" />
+                <div className="flex  flex-col">
+                  <p className="mb-6 text-left  text-gray-800 font-extrabold">
+                    იმ შემთხვევაში, თუ თქვენ ელ-ფოსტის მისამართი სწორად ჩაწერეთ
+                    სისტემაში, თქვენ მიიღებთ ინსტრუქციას პაროლის შეცვლის
+                    შესახებ.
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <p className="text-sm text-center text-gray-500 text-left mb-6">
+                OTP კოდი გაიგზავნა თქვენს ელ-ფოსტაზე. გთხოვთ შეიყვანოთ მიღებული
+                კოდი.
+              </p>
+
+              <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-4 mb-4">
+                {otp.map((digit, index) => (
+                  <input
+                    key={index}
+                    id={`otp-${index}`}
+                    type="text"
+                    maxLength="1"
+                    value={digit}
+                    onChange={(e) => handleOtpChange(e.target.value, index)}
+                    className="w-12 h-12  sm:w-14 sm:h-14  md:w-16 md:h-16  border-2 border-[#1A71B7]  rounded-lg  text-center   text-lg  sm:text-xl  md:text-2xl   focus:outline-none focus:ring-2   focus:ring-[#1A71B7]"
+                  />
+                ))}
+              </div>
+
+              <div className="flex justify-center items-center gap-3 text-sm text-gray-500 mb-6">
+                <button
+                  disabled={resendTimer > 0}
+                  onClick={async () => {
+                    try {
+                      const { data } = await authService.resendPasswordResetOtp(
+                        {
+                          resetToken,
+                        },
+                      );
+                      setOtp(["", "", "", ""]);
+                      setError("");
+                      setResendTimer(data.resendCooldownSeconds || 60);
+                    } catch (err) {
+                      setError("კოდის ხელახლა გაგზავნა ვერ მოხერხდა");
+                    }
+                  }}
+                  className={`transition ${
+                    resendTimer > 0
+                      ? "opacity-40 cursor-not-allowed"
+                      : "hover:opacity-70 cursor-pointer"
+                  }`}
+                >
+                  <RetryIcon />
+                </button>
+                <span>00:{resendTimer.toString().padStart(2, "0")}</span>
+              </div>
+
+              <label className="block text-gray-500 mb-2 text-left">
+                ახალი პაროლი
+              </label>
+              <div className="relative mb-6">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full h-12 sm:h-14 border-2 border-[#1A71B7] rounded-lg p-4 pr-14 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-4"
+                >
+                  {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+
+              <label className="block text-gray-500 mb-2 text-left">
+                გაიმეორეთ პაროლი
+              </label>
+              <div className="relative mb-6">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full border-2 border-[#1A71B7] rounded-lg p-4 pr-14 focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-4"
+                >
+                  {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+
+              <div className="text-xs sm:text-sm leading-7 mb-6 text-left text-gray-500">
+                <ul className="list-disc ml-6">
+                  <li>მინიმუმ 8 სიმბოლო</li>
+                  <li>ერთი დიდი ასო</li>
+                  <li>ერთი პატარა ასო</li>
+                  <li>ერთი ციფრი</li>
+                  <li>სპეციალური სიმბოლო</li>
+                </ul>
+              </div>
+
               <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-4"
+                onClick={handlePasswordSubmit}
+                className="w-full bg-[#1A71B7] hover:bg-blue-700 transition text-white rounded-lg py-4 text-lg font-medium"
               >
-                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                დადასტურება
               </button>
+            </>
+          )}
+          {step === 3 && (
+            <div className="text-center py-10">
+              <h2 className="text-2xl font-semibold text-green-700 mb-2">
+                პაროლი წარმატებით განახლდა
+              </h2>
+              <p className="text-gray-500">გადამისამართება ავტორიზაციაზე...</p>
             </div>
-
-            <label className="block text-gray-500 mb-2 text-left">
-              გაიმეორეთ პაროლი
-            </label>
-            <div className="relative mb-6">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full border-2 border-[#1A71B7] rounded-lg p-4 pr-14 focus:outline-none"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-4 top-4"
-              >
-                {showConfirmPassword ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
-            </div>
-
-            <div className="text-xs sm:text-sm leading-7 mb-6 text-left text-gray-500">
-              <ul className="list-disc ml-6">
-                <li>მინიმუმ 8 სიმბოლო</li>
-                <li>ერთი დიდი ასო</li>
-                <li>ერთი პატარა ასო</li>
-                <li>ერთი ციფრი</li>
-                <li>სპეციალური სიმბოლო</li>
-              </ul>
-            </div>
-
-            <button
-              onClick={handlePasswordSubmit}
-              className="w-full bg-[#1A71B7] hover:bg-blue-700 transition text-white rounded-lg py-4 text-lg font-medium"
-            >
-              დადასტურება
-            </button>
-          </>
-        )}
-        {step === 3 && (
-          <div className="text-center py-10">
-            <h2 className="text-2xl font-semibold text-green-700 mb-2">
-              პაროლი წარმატებით განახლდა
-            </h2>
-            <p className="text-gray-500">გადამისამართება ავტორიზაციაზე...</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </AuthLayout>
   );

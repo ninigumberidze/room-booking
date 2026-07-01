@@ -10,16 +10,16 @@ export default function RoomCard({
   color = "#5D9028",
 }) {
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
-      <div className="flex gap-3 p-4">
+    <div className="bg-white rounded-xl overflow-hidden  w-full   shadow-sm border border-gray-100 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02]">
+      <div className="flex flex-col sm:flex-row gap-4 p-4">
         <img
           src={roomImage}
           alt={room.name}
-          className="w-[120px] h-[180px] min-w-[180px] object-cover rounded-xl"
+          className="w-full sm:w-40 md:w-44 h-48 sm:h-44 md:h-48 object-cover rounded-xl self-center sm:self-start"
         />
 
         <div className="flex flex-col items-start flex-1 min-w-0">
-          <p className="font-semibold text-gray-800 text-left text-sm truncate">
+          <p className="font-semibold text-gray-800 text-left text-base sm:text-sm md:text-base truncate">
             {room.roomNumber} - {room.name}
           </p>
 
@@ -28,7 +28,7 @@ export default function RoomCard({
           </p>
 
           <span
-            className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-lg mb-2"
+            className="inline-block text-xs font-medium px-2.5 py-0.5 rounded-lg mb-2"
             style={
               room.hasAvailability
                 ? { backgroundColor: color, color: "#fff" }
@@ -55,7 +55,7 @@ export default function RoomCard({
         <button
           onClick={() => onBook(room)}
           disabled={!room.hasAvailability}
-          className="w-full py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed text-white"
+          className="w-full py-2.5 rounded-lg text-base sm:text-sm md:text-base font-medium transition-all flex items-center justify-center gap-2 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed text-white"
           style={room.hasAvailability ? { backgroundColor: color } : {}}
         >
           <BookingIcon />

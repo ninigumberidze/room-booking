@@ -97,7 +97,7 @@ export default function StudentProfile() {
 
             <button
               onClick={() => setShowHistory(true)}
-              className="border-2 border-[#5D9028] text-[#5D9028] px-5 py-2 rounded hover:bg-[#5D9028] hover:text-white transition"
+              className="sm:border-2 border-[#5D9028] text-[#5D9028] px-5 py-2 rounded hover:bg-[#5D9028] hover:text-white hover:bg-[] transition"
             >
               სრულად ნახვა
             </button>
@@ -106,8 +106,8 @@ export default function StudentProfile() {
 
         {showHistory && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-40">
-            <div className="bg-white rounded-lg w-[1100px] overflow-hidden">
-              <div className="bg-[#5D9028] text-white px-6 py-4 flex justify-between items-center">
+            <div className="bg-white rounded-lg w-[92%] max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
+              <div className="bg-[#5D9028] text-white px-4 sm:px-6 py-4 flex justify-between items-center">
                 <div className="flex gap-2 items-center justify-center ">
                   <HistoryIcon className="fill-white" />
                   <h2 className="text-xl text-white font-semibold">
@@ -121,16 +121,17 @@ export default function StudentProfile() {
                   ✕
                 </button>
               </div>
-
-              <BookingHistoryTable
-                bookings={currentBookings}
-                currentPage={historyPage}
-                totalPages={totalHistoryPages}
-                setCurrentPage={setHistoryPage}
-                onSelectBooking={handleShowQR}
-                onCancelBooking={handleCancelClick}
-                color="#5D9028"
-              />
+              <div className="overflow-auto">
+                <BookingHistoryTable
+                  bookings={currentBookings}
+                  currentPage={historyPage}
+                  totalPages={totalHistoryPages}
+                  setCurrentPage={setHistoryPage}
+                  onSelectBooking={handleShowQR}
+                  onCancelBooking={handleCancelClick}
+                  color="#5D9028"
+                />
+              </div>
             </div>
           </div>
         )}

@@ -48,7 +48,7 @@ export default function LecturerSidebar({ activeNav, color = "#1A71B7" }) {
 
       <div className="m-3 mb-12 bg-[#F4F6FA] rounded-xl p-3">
         <div className="flex items-center gap-2 mb-1.5">
-          <HelpIcon color="#1A71B7" />
+          <HelpIcon color="#1A71B7 " />
 
           <p className="text-md" style={{ color }}>
             დახმარება

@@ -3,7 +3,7 @@ export default function LogoutModal({ open, onClose, onConfirm }) {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 w-[400px]">
+      <div className="bg-white rounded-xl p-6 w-[95%] max-w-sm">
         <h3 className="text-xl text-black font-bold mb-3">სისტემიდან გასვლა</h3>
 
         <p className="text-gray-600 mb-6">ნამდვილად გსურთ სისტემიდან გასვლა?</p>

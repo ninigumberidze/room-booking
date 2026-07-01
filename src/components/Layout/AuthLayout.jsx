@@ -18,7 +18,7 @@ export default function AuthLayout({ children }) {
         <div className="w-full max-w-xl">
           <div
             onClick={() => navigate("/")}
-            className="flex items-center gap-3 sm:gap-4  mb-8 md:mb-12 cursor-pointer px-4 sm:px-0"
+            className="flex items-center gap-3 sm:gap-4  mb-8 md:mb-12 cursor-pointer px-4 py-4 sm:py-0 sm:px-0"
           >
             <img
               src={logo}

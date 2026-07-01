@@ -9,8 +9,8 @@ export default function BookingConfirmModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-40">
-      <div className="bg-white rounded-xl p-6 w-[400px]">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-40 p-4">
+      <div className="bg-white rounded-xl  w-[90%] max-w-md p-5 sm:p-6 shadow-xl">
         <h3 className="text-xl text-black font-semibold mb-3">{title}</h3>
         <p className="text-gray-600 mb-6">{description}</p>
         <div className="flex justify-between gap-3">

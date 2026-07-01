@@ -25,7 +25,7 @@ export default function StudentSidebar({
     },
   ];
   return (
-    <aside className="w-56 bg-white flex flex-col  flex-shrink-0 overflow-y-auto rounded-xl m-4">
+    <aside className=" hidden lg:flex w-60 bg-white flex flex-col  flex-shrink-0 overflow-y-auto rounded-xl m-4">
       <nav className="flex-1 px-3 py-4 space-y-0.5">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -49,7 +49,7 @@ export default function StudentSidebar({
         })}
       </nav>
 
-      <div className="m-3 mb-12 bg-[#F4F6FA] rounded-xl p-3">
+      <div className="m-3 mb-12 mt-auto bg-[#F4F6FA] rounded-xl p-3">
         <div className="flex items-center gap-2 mb-1.5">
           <HelpIcon color="#5D9028" />
 

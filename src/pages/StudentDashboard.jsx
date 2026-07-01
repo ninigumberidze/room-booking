@@ -54,9 +54,7 @@ export default function StudentDashboard() {
       setAvailability(data);
       setSelectedRoomForTime(room);
       setSelectedSlots([]);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   const loadRooms = async (searchFilters = {}) => {
@@ -70,9 +68,7 @@ export default function StudentDashboard() {
         params.roomNumber = searchFilters.roomNumber;
       const { data } = await reservationService.getRooms(params);
       setResults(data.rooms || []);
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   };
 
   const handleCreateReservation = async () => {
@@ -108,7 +104,6 @@ export default function StudentDashboard() {
       const { data } = await reservationService.getFilters();
       setReservationFilters(data);
     } catch (error) {
-      
     } finally {
       setLoadingFilters(false);
     }
@@ -148,7 +143,7 @@ export default function StudentDashboard() {
               <h2 className="text-gray-800 text-left font-semibold mb-4 text-[18px]">
                 გამარჯობა {user?.firstName}, მოძებნე სასურველი ოთახი
               </h2>
-              <div className="flex flex-wrap gap-3 items-end">
+              <div className=" grid grid-cols-1 gap-4 md:flex md:flex-wrap md:gap-3 md:items-end">
                 <div>
                   <label className="block text-left text-[16px] text-gray-600 mb-1 font-medium">
                     თარიღი
@@ -160,7 +155,7 @@ export default function StudentDashboard() {
                     min={reservationFilters?.minDate}
                     max={reservationFilters?.maxDate}
                     onChange={handleChange}
-                    className="border  border-gray-200 px-3 py-2 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#4A7A20] focus:border-transparent"
+                    className=" w-full border  border-gray-200 px-3 py-2 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#4A7A20] focus:border-transparent"
                   />
                 </div>
 
@@ -172,7 +167,7 @@ export default function StudentDashboard() {
                     name="buildingId"
                     value={filters.buildingId}
                     onChange={handleChange}
-                    className="border border-gray-200 px-3 py-2 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#4A7A20] focus:border-transparent min-w-[230px]"
+                    className=" w-full border border-gray-200 px-3 py-2 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#4A7A20] focus:border-transparent min-w-[230px]"
                   >
                     <option value="">შენობა</option>
                     {reservationFilters?.buildings?.map((b) => (
@@ -191,7 +186,7 @@ export default function StudentDashboard() {
                     name="roomType"
                     value={filters.roomType}
                     onChange={handleChange}
-                    className="border border-gray-200 px-3 py-2 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#4A7A20] focus:border-transparent min-w-[190px]"
+                    className=" w-full border border-gray-200 px-3 py-2 rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#4A7A20] focus:border-transparent min-w-[190px]"
                   >
                     <option value="">ოთახის ტიპი</option>
                     {reservationFilters?.allowedRoomTypes?.map((t) => (
@@ -222,7 +217,7 @@ export default function StudentDashboard() {
 
             {results.length > 0 ? (
               <div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1  sm:grid-cols-2  xl:grid-cols-3 gap-4">
                   {currentRooms.map((room) => (
                     <RoomCard
                       key={room.id}
